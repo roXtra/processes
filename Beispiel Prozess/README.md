@@ -1,3 +1,6 @@
 # Beispiel Prozess
-![Bild des Prozesses](./beispiel-prozess.svg)
+## Bild
 <img src="./beispiel-prozess.svg">
+
+## Beschreibung
+Ein einfacher Beispielprozess

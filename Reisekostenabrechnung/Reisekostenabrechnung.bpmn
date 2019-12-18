@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_6ACC9F2C7F88C324">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.011.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_5AC112D0D9A5A813">
+    <bpmn:participant id="Participant_B70CAAF445CA2F6B" name="Reisekostenabrechnung" processRef="Process_BC96A478C03A470B" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_BC96A478C03A470B" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_169D75F99A3BF078">
+      <bpmn:lane id="Lane_961A39ECDFC16ECA" name="Antragsteller(in)">
+        <bpmn:flowNodeRef>StartEvent_BEC1D436333DD21C</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_2E12F59C79C58537</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_EE7C514E77261D8F" name="Reisekostenmanagement">
+        <bpmn:flowNodeRef>UserTask_53FF3057A329A4CA</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_AB1F4B691AFE7F39</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_3D43E53C924B2683</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_DDA7EE3C0738A1F9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_28C5BC563F90018D</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_69C58D0BEC066DCE</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_7771867881F868B3" name="Geschäftsleitung">
+        <bpmn:flowNodeRef>UserTask_E256ACE06F6A614E</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_27C7482CD318B417</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_081909659AD4762C</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_ACED0681F18F400A</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_BEC1D436333DD21C" name="Reisekostenabrechnung starten">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="roleowners-editable">true</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_6746AC647CCD45BA</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_2E12F59C79C58537" name="Reisekostenabrechnung ausfüllen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte laden Sie das vollständig ausgefüllte Dokument zur Reisekostenabrechnung hoch.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">false</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Reisekostenabrechung","type":"ProcessHubFileUpload","isRequired":false,"config":{"roxFileIconUrl":"http://SV-02/Roxtra/doc/images/icons/adobepdf.gif","roxFileId":18794,"roxFileName":"Dienstreise_Reisekostenabrechnung"}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_6746AC647CCD45BA</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_94F4E88FBDFF90DD</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_A0D106D6ADD6D7DF</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_E256ACE06F6A614E" name="Genehmigung der Erstattung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Die Erstattung wird","type":"ProcessHubDropdown","isRequired":false,"config":{"options":["genehmigt","nicht genehmigt"]}},{"name":"Begründung","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Die Erstattung wird']=='nicht genehmigt'","defaultValue":""}},{"name":"Kommentar","type":"ProcessHubTextArea","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte genehmigen Sie den Antrag zur Erstattung der Reisekosten.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_B4B02A8E27B8BA8D</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_934BBEA948EAED79</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_27C7482CD318B417" name="Reisekostenabrechnung abgelehnt">
+      <bpmn:incoming>SequenceFlow_BCE6641749604868</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_6746AC647CCD45BA" sourceRef="StartEvent_BEC1D436333DD21C" targetRef="UserTask_2E12F59C79C58537" />
+    <bpmn:userTask id="UserTask_53FF3057A329A4CA" name="Reisekostenabrechnung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">259200</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Checkliste","type":"ProcessHubChecklist","isRequired":false,"config":{"entries":[{"name":"Auflistung der erstattbaren Reisekosten vorhanden"},{"name":"Rechnerisch richtig"},{"name":"Nachweise/Formulare vollständig"}],"oneEntryMustBeChecked":false,"defaultValue":{}}},{"name":"Reisekostenabrechnung ist","type":"ProcessHubDropdown","isRequired":false,"config":{"options":["vollständig","unvollständig"]}},{"name":"fehlende Angaben","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Reisekostenabrechnung ist']=='unvollständig'","defaultValue":""}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_A0D106D6ADD6D7DF</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_6EA5396EADAF96D1</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_A0D106D6ADD6D7DF" sourceRef="UserTask_2E12F59C79C58537" targetRef="UserTask_53FF3057A329A4CA" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_081909659AD4762C" name="">
+      <bpmn:incoming>SequenceFlow_934BBEA948EAED79</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_3A00E5B4DF4EFA05</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_408ECA991B34432C</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_934BBEA948EAED79" sourceRef="UserTask_E256ACE06F6A614E" targetRef="ExclusiveGateway_081909659AD4762C">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression" />
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_AB1F4B691AFE7F39" name="">
+      <bpmn:incoming>SequenceFlow_6EA5396EADAF96D1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_B4B02A8E27B8BA8D</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_D6D2CF210770FF76</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_6EA5396EADAF96D1" sourceRef="UserTask_53FF3057A329A4CA" targetRef="ExclusiveGateway_AB1F4B691AFE7F39" />
+    <bpmn:sequenceFlow id="SequenceFlow_B4B02A8E27B8BA8D" name="vollständig" sourceRef="ExclusiveGateway_AB1F4B691AFE7F39" targetRef="UserTask_E256ACE06F6A614E">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression" />
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_AB1F4B691AFE7F39.userInput.choosenTaskId == 'UserTask_E256ACE06F6A614E'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sendTask id="SendTask_3D43E53C924B2683" name="Reisekosten werden erstattet">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Guten Tag role['Antragsteller(in)'].firstName role['Antragsteller(in)'].lastName
+
+Ihre Reisekostenabrechnung wurde freigegeben.
+Die Reisekosten werden zum nächstmöglichen Zeitpunkt erstattet.
+
+Viele Grüße
+role['Reisekostenmanagement'].firstName role['Reisekostenmanagement'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_961A39ECDFC16ECA"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Reisekosten werden erstattet</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">false</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">false</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">["Reisekostennachweis"]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_A247AC13BB95EAF7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_DBA111554D95A961</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_D6D2CF210770FF76" name="unvollständig" sourceRef="ExclusiveGateway_AB1F4B691AFE7F39" targetRef="SendTask_DDA7EE3C0738A1F9">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Reisekostenabrechnung ist'] == 'unvollständig')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_AB1F4B691AFE7F39.userInput.choosenTaskId == 'SendTask_DDA7EE3C0738A1F9'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sendTask id="SendTask_ACED0681F18F400A" name="Rückmeldung an Antragsteller">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Hallo role['Antragsteller(in)'].firstName role['Antragsteller(in)'].lastName,
+
+Ihre Reisekostenabrechnung kann vorerst nicht genehmigt werden.
+Begründung: field['Begründung']
+
+Viele Grüße
+role['Geschäftsleitung'].firstName role['Geschäftsleitung'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_961A39ECDFC16ECA"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Hinweis zu Ihrer Reisekostenabrechnung</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">false</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">false</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">[]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_408ECA991B34432C</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_BCE6641749604868</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sendTask id="SendTask_DDA7EE3C0738A1F9" name="Benachrichtigung zur Vervollständigung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Hallo role['Antragsteller(in)'].firstName role['Antragsteller(in)'].lastName,
+
+Folgende Angaben Ihrer Reisekostenabrechnung fehlen:
+field['fehlende Angaben']
+
+Bitte vervollständigen Sie die Angaben.
+
+Viele Grüße
+role['Reisekostenmanagement'].firstName role['Reisekostenmanagement'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_961A39ECDFC16ECA"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Ihre Reisekostenabrechnung ist unvollständig</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">true</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send" />
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_D6D2CF210770FF76</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_94F4E88FBDFF90DD</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_94F4E88FBDFF90DD" sourceRef="SendTask_DDA7EE3C0738A1F9" targetRef="UserTask_2E12F59C79C58537" />
+    <bpmn:endEvent id="EndEvent_28C5BC563F90018D" name="Reisekosten erstattet">
+      <bpmn:incoming>SequenceFlow_DBA111554D95A961</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="UserTask_69C58D0BEC066DCE" name="Reisekosten erstatten">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Die Reisekostenabrechnung wurde genehmigt. Bitte erstatten Sie dem/der Antragsteller/in den Betrag.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_3A00E5B4DF4EFA05</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_A247AC13BB95EAF7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_3A00E5B4DF4EFA05" name="genehmigt" sourceRef="ExclusiveGateway_081909659AD4762C" targetRef="UserTask_69C58D0BEC066DCE">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression" />
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_081909659AD4762C.userInput.choosenTaskId == 'UserTask_69C58D0BEC066DCE'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_A247AC13BB95EAF7" sourceRef="UserTask_69C58D0BEC066DCE" targetRef="SendTask_3D43E53C924B2683" />
+    <bpmn:sequenceFlow id="SequenceFlow_DBA111554D95A961" sourceRef="SendTask_3D43E53C924B2683" targetRef="EndEvent_28C5BC563F90018D" />
+    <bpmn:sequenceFlow id="SequenceFlow_408ECA991B34432C" name="nicht genehmigt" sourceRef="ExclusiveGateway_081909659AD4762C" targetRef="SendTask_ACED0681F18F400A">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Die Erstattung wird'] == 'nicht genehmigt')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_081909659AD4762C.userInput.choosenTaskId == 'SendTask_ACED0681F18F400A'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_BCE6641749604868" sourceRef="SendTask_ACED0681F18F400A" targetRef="EndEvent_27C7482CD318B417" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_6D6AB8C6AB38BD1C">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_5AC112D0D9A5A813">
+      <bpmndi:BPMNShape id="BPMNShape_A512873AE901DBB1" bpmnElement="Lane_961A39ECDFC16ECA">
+        <dc:Bounds x="430" y="-72" width="1453" height="206" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_DEA33ECC5F73B281" bpmnElement="Lane_EE7C514E77261D8F">
+        <dc:Bounds x="430" y="134" width="1453" height="163" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_F5BBAD36DA313BF2" bpmnElement="Lane_7771867881F868B3">
+        <dc:Bounds x="430" y="297" width="1453" height="162.70675000000006" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_89840E8F0973F91D" bpmnElement="Participant_B70CAAF445CA2F6B">
+        <dc:Bounds x="400" y="-72" width="1483" height="531.70675" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_8738000E25F8373C" bpmnElement="StartEvent_BEC1D436333DD21C">
+        <dc:Bounds x="541" y="45" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_713D936897491028" bpmnElement="UserTask_2E12F59C79C58537">
+        <dc:Bounds x="666" y="23" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_8AF2D751F7C97C96" bpmnElement="UserTask_E256ACE06F6A614E">
+        <dc:Bounds x="964" y="346" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_033E1D5E49FDFD77" bpmnElement="EndEvent_27C7482CD318B417">
+        <dc:Bounds x="1752" y="368" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_3760E36D5A18D619" bpmnElement="SequenceFlow_6746AC647CCD45BA" sourceElement="BPMNShape_8738000E25F8373C" targetElement="BPMNShape_713D936897491028">
+        <di:waypoint x="577" y="63" />
+        <di:waypoint x="666" y="63" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_8307E37F39D226B7" bpmnElement="UserTask_53FF3057A329A4CA">
+        <dc:Bounds x="828" y="162.5" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0EB2D40864E712B0" bpmnElement="SequenceFlow_A0D106D6ADD6D7DF" sourceElement="BPMNShape_713D936897491028" targetElement="BPMNShape_8307E37F39D226B7">
+        <di:waypoint x="716" y="103" />
+        <di:waypoint x="716" y="203" />
+        <di:waypoint x="828" y="202.5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_0704CE45C282C3EB" bpmnElement="ExclusiveGateway_081909659AD4762C">
+        <dc:Bounds x="1399" y="364.5" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_D1ED325D7BC74924" bpmnElement="SequenceFlow_934BBEA948EAED79" sourceElement="BPMNShape_8AF2D751F7C97C96" targetElement="BPMNShape_0704CE45C282C3EB">
+        <di:waypoint x="1064" y="386" />
+        <di:waypoint x="1399" y="386.0865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_2B61802712C24972" bpmnElement="ExclusiveGateway_AB1F4B691AFE7F39">
+        <dc:Bounds x="992" y="181.5" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_79F4F8C9A5421518" bpmnElement="SequenceFlow_6EA5396EADAF96D1" sourceElement="BPMNShape_8307E37F39D226B7" targetElement="BPMNShape_2B61802712C24972">
+        <di:waypoint x="928" y="202.5" />
+        <di:waypoint x="992" y="203.0865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1DA267C36266EFD7" bpmnElement="SequenceFlow_B4B02A8E27B8BA8D" sourceElement="BPMNShape_2B61802712C24972" targetElement="BPMNShape_8AF2D751F7C97C96">
+        <di:waypoint x="1013.5865" y="224.673" />
+        <di:waypoint x="1014" y="346" />
+        <bpmndi:BPMNLabel id="BPMNEdge_1DA267C36266EFD7_label">
+          <dc:Bounds x="948.79325" y="259.3365" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_D91B210CBD53BE07" bpmnElement="SendTask_3D43E53C924B2683">
+        <dc:Bounds x="1552" y="162.5" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_87D189272478D35C" bpmnElement="SequenceFlow_D6D2CF210770FF76" sourceElement="BPMNShape_2B61802712C24972" targetElement="BPMNShape_2FBC48B34B35FE40">
+        <di:waypoint x="1035.173" y="203.0865" />
+        <di:waypoint x="1152" y="203" />
+        <bpmndi:BPMNLabel id="BPMNEdge_87D189272478D35C_label">
+          <dc:Bounds x="977.5864999999999" y="180.04325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_A13AC265E2DE526A" bpmnElement="SendTask_ACED0681F18F400A">
+        <dc:Bounds x="1552" y="346" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_2FBC48B34B35FE40" bpmnElement="SendTask_DDA7EE3C0738A1F9">
+        <dc:Bounds x="1152" y="163" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_F820933049A7D8BA" bpmnElement="SequenceFlow_94F4E88FBDFF90DD" sourceElement="BPMNShape_2FBC48B34B35FE40" targetElement="BPMNShape_713D936897491028">
+        <di:waypoint x="1202" y="163" />
+        <di:waypoint x="1202" y="-29" />
+        <di:waypoint x="716" y="-29" />
+        <di:waypoint x="716" y="23" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_90C3AF1DAF441935" bpmnElement="EndEvent_28C5BC563F90018D">
+        <dc:Bounds x="1751" y="184" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_A6F1D76F8CD63E55" bpmnElement="UserTask_69C58D0BEC066DCE">
+        <dc:Bounds x="1371" y="162.5" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_A13AC1BE8CB38383" bpmnElement="SequenceFlow_3A00E5B4DF4EFA05" sourceElement="BPMNShape_0704CE45C282C3EB" targetElement="BPMNShape_A6F1D76F8CD63E55">
+        <di:waypoint x="1420.5865" y="364.5" />
+        <di:waypoint x="1421" y="242.5" />
+        <bpmndi:BPMNLabel id="BPMNEdge_A13AC1BE8CB38383_label">
+          <dc:Bounds x="1320.79325" y="302.5" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_2EC16271CC1CEC7D" bpmnElement="SequenceFlow_A247AC13BB95EAF7" sourceElement="BPMNShape_A6F1D76F8CD63E55" targetElement="BPMNShape_D91B210CBD53BE07">
+        <di:waypoint x="1471" y="202.5" />
+        <di:waypoint x="1552" y="202.5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_D1C4C0755E7277DC" bpmnElement="SequenceFlow_DBA111554D95A961" sourceElement="BPMNShape_D91B210CBD53BE07" targetElement="BPMNShape_90C3AF1DAF441935">
+        <di:waypoint x="1652" y="202.5" />
+        <di:waypoint x="1751" y="202.595" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_3135904A800F58B3" bpmnElement="SequenceFlow_408ECA991B34432C" sourceElement="BPMNShape_0704CE45C282C3EB" targetElement="BPMNShape_A13AC265E2DE526A">
+        <di:waypoint x="1442.173" y="386.0865" />
+        <di:waypoint x="1552" y="386" />
+        <bpmndi:BPMNLabel id="BPMNEdge_3135904A800F58B3_label">
+          <dc:Bounds x="1395.0865" y="357.04325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_CF4C668B5653ECF1" bpmnElement="SequenceFlow_BCE6641749604868" sourceElement="BPMNShape_A13AC265E2DE526A" targetElement="BPMNShape_033E1D5E49FDFD77">
+        <di:waypoint x="1652" y="386" />
+        <di:waypoint x="1752" y="386" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

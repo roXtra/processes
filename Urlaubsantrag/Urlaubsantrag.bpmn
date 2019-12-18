@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_5621995031B96DAE">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.011.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_383586F1C6E7BF9B">
+    <bpmn:participant id="Participant_231CDCC382B48507" name="Urlaubsantrag" processRef="Process_108DC571613CA64C" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_108DC571613CA64C" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_107E2524ECAF2606">
+      <bpmn:lane id="Lane_15BF8FD9F170DBF1" name="Mitarbeiter(in)">
+        <bpmn:flowNodeRef>StartEvent_A6459EC85B6F20B5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_F2E20721FF03F96D" name="Personalabteilung">
+        <bpmn:flowNodeRef>UserTask_33096562BA839600</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_5D2C3730DB994FF2" name="Vorgesetzte(r)">
+        <bpmn:flowNodeRef>EndEvent_D6C9456ABDD08B46</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_DAC3C97942B121C2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_9A31D6B87F107333</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_A4E83D5E943D7F9F</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_C7B79EF2E358A867</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_82E48B23B0F03022</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_6C5AA2E788F36A1B</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_A6459EC85B6F20B5" name="Urlaub beantragen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="roleowners-editable">true</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte füllen Sie den Urlaubsantrag vollständig aus.</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Urlaub von","type":"ProcessHubDate","isRequired":true,"config":{}},{"name":"Urlaub bis","type":"ProcessHubDate","isRequired":true,"config":{}},{"name":"Anzahl der benötigten Urlaubstage","type":"ProcessHubNumber","isRequired":true,"config":{"onlyIntegers":false}},{"name":"Anlagen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Urlaubsart","type":"ProcessHubChecklist","isRequired":false,"config":{"entries":[{"name":"Erholungsurlaub"},{"name":"Sonderurlaub"},{"name":"Bildungsurlaub"}],"defaultValue":{}}},{"name":"Kommentar","type":"ProcessHubTextArea","isRequired":false,"config":{"labelHtml":"&lt;p&gt;&lt;br&gt;&lt;/p&gt;"}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_E82904F9CE1E41DD</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_D6C9456ABDD08B46" name="Urlaubsantrag genehmigt">
+      <bpmn:incoming>SequenceFlow_57EF5D33EA4F24E4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_E82904F9CE1E41DD" sourceRef="StartEvent_A6459EC85B6F20B5" targetRef="UserTask_6C5AA2E788F36A1B" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_DAC3C97942B121C2" name="">
+      <bpmn:incoming>SequenceFlow_CB4F55591A97357A</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_D49478F78F86F38F</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_FC6CE512D27A83D1</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="SendTask_9A31D6B87F107333" name="Urlaub abgelehnt">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Hallo role['Mitarbeiter(in)'].firstName role['Mitarbeiter(in)'].lastName
+
+Ihr Urlaubsantrag vom field['Urlaub von'] bis field['Urlaub bis'] wurde nicht genehmigt.
+Begründung: field['Begründung'] field['Hinweis']
+
+Mit freundlichen Grüßen 
+role['Vorgesetzte(r)'].firstName role['Vorgesetzte(r)'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_15BF8FD9F170DBF1"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Ihr Urlaub wurde nicht genehmigt</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">false</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">false</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">["Ablehnungsgrund","Urlaub von","Urlaub bis"]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_D49478F78F86F38F</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_DB26F093FD5CC30C</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_C3CE3FE0EBE9E58A</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_D49478F78F86F38F" name="nicht genehmigt" sourceRef="ExclusiveGateway_DAC3C97942B121C2" targetRef="SendTask_9A31D6B87F107333">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Urlaub wird'] == 'nicht genehmigt')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_DAC3C97942B121C2.userInput.choosenTaskId == 'SendTask_9A31D6B87F107333'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_A4E83D5E943D7F9F" name="Urlaubsantrag nicht genehmigt">
+      <bpmn:incoming>SequenceFlow_C3CE3FE0EBE9E58A</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="UserTask_33096562BA839600" name="Urlaub prüfen ">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte prüfen Sie den Urlaubsantrag.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Resturlaub (in Tagen)","type":"ProcessHubNumber","isRequired":true,"config":{}},{"name":"Ausreichend Resturlaub vorhanden?","type":"ProcessHubDropdown","isRequired":true,"config":{"defaultValue":"ja","options":["ja","nein"]}},{"name":"Hinweis","type":"ProcessHubTextArea","isRequired":true,"config":{"conditionExpression":"field['Ausreichend Resturlaub vorhanden?']=='nein'","defaultValue":""}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_FC6CE512D27A83D1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_551622117503E4EC</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_FC6CE512D27A83D1" name="genehmigt" sourceRef="ExclusiveGateway_DAC3C97942B121C2" targetRef="UserTask_33096562BA839600">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression" />
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_DAC3C97942B121C2.userInput.choosenTaskId == 'UserTask_33096562BA839600'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_C7B79EF2E358A867" name="">
+      <bpmn:incoming>SequenceFlow_551622117503E4EC</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_6007BAE4D70AC563</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_DB26F093FD5CC30C</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_551622117503E4EC" sourceRef="UserTask_33096562BA839600" targetRef="ExclusiveGateway_C7B79EF2E358A867" />
+    <bpmn:sendTask id="SendTask_82E48B23B0F03022" name="Urlaub genehmigt">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Hallo role['Mitarbeiter(in)'].firstName role['Mitarbeiter(in)'].lastName
+
+Ihrem Urlaubsantrag vom field['Urlaub von'] bis field['Urlaub bis'] wurde stattgegeben.
+Ich wünsche Ihnen einen schönen Urlaub.
+
+role['Vorgesetzte(r)'].firstName role['Vorgesetzte(r)'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_15BF8FD9F170DBF1"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Ihr Urlaub wurde genehmigt</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">false</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">false</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">["Urlaub von","Urlaub bis"]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_6007BAE4D70AC563</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_57EF5D33EA4F24E4</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_6007BAE4D70AC563" name="ja" sourceRef="ExclusiveGateway_C7B79EF2E358A867" targetRef="SendTask_82E48B23B0F03022">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression" />
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_C7B79EF2E358A867.userInput.choosenTaskId == 'SendTask_82E48B23B0F03022'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_57EF5D33EA4F24E4" sourceRef="SendTask_82E48B23B0F03022" targetRef="EndEvent_D6C9456ABDD08B46" />
+    <bpmn:sequenceFlow id="SequenceFlow_C3CE3FE0EBE9E58A" sourceRef="SendTask_9A31D6B87F107333" targetRef="EndEvent_A4E83D5E943D7F9F" />
+    <bpmn:sequenceFlow id="SequenceFlow_DB26F093FD5CC30C" name="nein" sourceRef="ExclusiveGateway_C7B79EF2E358A867" targetRef="SendTask_9A31D6B87F107333">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Ausreichend Resturlaub vorhanden?'] == 'nein')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_C7B79EF2E358A867.userInput.choosenTaskId == 'SendTask_9A31D6B87F107333'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:userTask id="UserTask_6C5AA2E788F36A1B" name="Urlaub genehmigen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte genehmigen Sie den Urlaubsantrag.</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Urlaub wird","type":"ProcessHubDropdown","isRequired":true,"config":{"defaultValue":"genehmigt","options":["genehmigt","nicht genehmigt"]}},{"name":"Begründung","type":"ProcessHubTextArea","isRequired":true,"config":{"conditionExpression":"field['Urlaub wird']=='nicht genehmigt'","defaultValue":""}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_E82904F9CE1E41DD</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_CB4F55591A97357A</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_CB4F55591A97357A" sourceRef="UserTask_6C5AA2E788F36A1B" targetRef="ExclusiveGateway_DAC3C97942B121C2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_3B6E02A6349A9888">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_383586F1C6E7BF9B">
+      <bpmndi:BPMNShape id="BPMNShape_7C4D42B8033794E1" bpmnElement="Lane_15BF8FD9F170DBF1">
+        <dc:Bounds x="430" y="-213.33900000000003" width="1124" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0AAF4564CBACEE14" bpmnElement="Participant_231CDCC382B48507">
+        <dc:Bounds x="400" y="-213.33900000000003" width="1154" height="487.3560000000001" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_D6EDD09788393F7D" bpmnElement="StartEvent_A6459EC85B6F20B5">
+        <dc:Bounds x="500" y="-168.33900000000003" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1F273DFC2142EA0A" bpmnElement="EndEvent_D6C9456ABDD08B46">
+        <dc:Bounds x="1423" y="68" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_DA552064A578A75F" bpmnElement="SequenceFlow_E82904F9CE1E41DD" sourceElement="BPMNShape_D6EDD09788393F7D" targetElement="BPMNShape_EC616B0D7C16A40E">
+        <di:waypoint x="536" y="-150.33900000000003" />
+        <di:waypoint x="661" y="-150.33900000000003" />
+        <di:waypoint x="661" y="-66" />
+        <bpmndi:BPMNLabel id="BPMNEdge_DA552064A578A75F_label">
+          <dc:Bounds x="571" y="-120.16950000000001" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_67CC3BF48B3F8EB3" bpmnElement="Lane_F2E20721FF03F96D">
+        <dc:Bounds x="430" y="142" width="1124" height="132.01700000000005" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_8AB0DC4413888BD6" bpmnElement="ExclusiveGateway_DAC3C97942B121C2">
+        <dc:Bounds x="784" y="-48" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_E6A45CD5D2A877B9" bpmnElement="SendTask_9A31D6B87F107333">
+        <dc:Bounds x="992.173" y="-66.4135" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_EAFBAB1AD2F0DF2A" bpmnElement="SequenceFlow_D49478F78F86F38F" sourceElement="BPMNShape_8AB0DC4413888BD6" targetElement="BPMNShape_E6A45CD5D2A877B9">
+        <di:waypoint x="827.173" y="-26.4135" />
+        <di:waypoint x="992.173" y="-26.4135" />
+        <bpmndi:BPMNLabel id="BPMNEdge_EAFBAB1AD2F0DF2A_label">
+          <dc:Bounds x="790.8797500000001" y="-47.70675" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_6E3C29260EBEB7BE" bpmnElement="EndEvent_A4E83D5E943D7F9F">
+        <dc:Bounds x="1422.173" y="-44.347500000000025" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_C55EB69B620E23B0" bpmnElement="UserTask_33096562BA839600">
+        <dc:Bounds x="756.173" y="176.5865" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_DE10138612F00D19" bpmnElement="SequenceFlow_FC6CE512D27A83D1" sourceElement="BPMNShape_8AB0DC4413888BD6" targetElement="BPMNShape_C55EB69B620E23B0">
+        <di:waypoint x="805.5865" y="-4.826999999999998" />
+        <di:waypoint x="806.173" y="176.5865" />
+        <bpmndi:BPMNLabel id="BPMNEdge_DE10138612F00D19_label">
+          <dc:Bounds x="803" y="5" width="82" height="37" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_268AECFEAAB89D9D" bpmnElement="ExclusiveGateway_C7B79EF2E358A867">
+        <dc:Bounds x="1020.173" y="64" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_738F8926F5E5FDEF" bpmnElement="SequenceFlow_551622117503E4EC" sourceElement="BPMNShape_C55EB69B620E23B0" targetElement="BPMNShape_268AECFEAAB89D9D">
+        <di:waypoint x="856.173" y="216.5865" />
+        <di:waypoint x="1041.7595000000001" y="216.5865" />
+        <di:waypoint x="1041.7595000000001" y="107.173" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_F2319C7F064413EB" bpmnElement="SendTask_82E48B23B0F03022">
+        <dc:Bounds x="1210.346" y="45.5865" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_4A7C0BCEB28186A3" bpmnElement="SequenceFlow_6007BAE4D70AC563" sourceElement="BPMNShape_268AECFEAAB89D9D" targetElement="BPMNShape_F2319C7F064413EB">
+        <di:waypoint x="1063.346" y="85.5865" />
+        <di:waypoint x="1210.346" y="85.5865" />
+        <bpmndi:BPMNLabel id="BPMNEdge_4A7C0BCEB28186A3_label">
+          <dc:Bounds x="1093" y="62" width="111" height="23" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_A8873C0CD50787C7" bpmnElement="SequenceFlow_57EF5D33EA4F24E4" sourceElement="BPMNShape_F2319C7F064413EB" targetElement="BPMNShape_1F273DFC2142EA0A">
+        <di:waypoint x="1310.346" y="85.5865" />
+        <di:waypoint x="1423" y="86" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_7047FE3903A41B0F" bpmnElement="SequenceFlow_C3CE3FE0EBE9E58A" sourceElement="BPMNShape_E6A45CD5D2A877B9" targetElement="BPMNShape_6E3C29260EBEB7BE">
+        <di:waypoint x="1092.173" y="-26.4135" />
+        <di:waypoint x="1422.173" y="-25.752500000000026" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_E646DA1684325B11" bpmnElement="SequenceFlow_DB26F093FD5CC30C" sourceElement="BPMNShape_268AECFEAAB89D9D" targetElement="BPMNShape_E6A45CD5D2A877B9">
+        <di:waypoint x="1041.7595000000001" y="64" />
+        <di:waypoint x="1042.173" y="13.586500000000001" />
+        <bpmndi:BPMNLabel id="BPMNEdge_E646DA1684325B11_label">
+          <dc:Bounds x="967.96625" y="42.79325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_8219EC2E7C0CB18E" bpmnElement="Lane_5D2C3730DB994FF2">
+        <dc:Bounds x="430" y="-88.33900000000003" width="1124" height="230.33900000000003" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EC616B0D7C16A40E" bpmnElement="UserTask_6C5AA2E788F36A1B">
+        <dc:Bounds x="611" y="-66" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_C74D31A957E69964" bpmnElement="SequenceFlow_CB4F55591A97357A" sourceElement="BPMNShape_EC616B0D7C16A40E" targetElement="BPMNShape_8AB0DC4413888BD6">
+        <di:waypoint x="711" y="-26.4135" />
+        <di:waypoint x="784" y="-26.4135" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

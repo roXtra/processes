@@ -1,6 +1,6 @@
 # Angebotsfreigabe
 ## Bild
-<img src="./angebotsfreigabe.PNG">
+<img src="./angebotsfreigabe.png">
 
 ## Beschreibung 
 

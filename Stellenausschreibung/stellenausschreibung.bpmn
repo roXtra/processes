@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_5A793DB538A7C4B9">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.15.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_CB0525BC8F953C61">
+    <bpmn:participant id="Participant_CA2F64C0F294F0D3" name="Stellenausschreibung" processRef="Process_3DDF0C20D37B278F" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_3DDF0C20D37B278F" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_9164C33E9515EA24">
+      <bpmn:lane id="Lane_98FA24CDEDFA9A7C" name="Fachabteilung">
+        <bpmn:flowNodeRef>StartEvent_6C52D664B2725BD1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_9FEE209D7538C29C</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_C7D850E28042B335" name="Personalabteilung">
+        <bpmn:flowNodeRef>UserTask_C4BE4BEB1FC0781C</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_3DC1D401EEFFACA8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_11787DB8B99B5C22</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_3499B753D7E9AD5D</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_F55AB0867AB6D281</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_12F8883CD3F07A24</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_D34C4A7789EA78F5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_7C49B692D1E70AEA</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_64AF93CE28A23C03</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_6C52D664B2725BD1" name="Mitarbeiterbedarf melden">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Bezeichnung","type":"ProcessHubTextInput","isRequired":true,"config":{}},{"name":"Abteilung","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Aufgabenbeschreibung","type":"ProcessHubTextArea","isRequired":true,"config":{"defaultValue":""}},{"name":"Mögliches Arbeitsverhältnis","type":"ProcessHubChecklist","isRequired":true,"config":{"entries":[{"name":"Vollzeit"},{"name":"Teilzeit"},{"name":"Werkstudent"},{"name":"Praktikum"},{"name":"Aushilfe"},{"name":"Leiharbeit"}],"oneEntryMustBeChecked":true,"defaultValue":{}}},{"name":"Voraussetzungen","type":"ProcessHubTextArea","isRequired":true,"config":{"defaultValue":""}},{"name":"verfügbar ab","type":"ProcessHubDate","isRequired":true,"config":{}},{"name":"Anlagen","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="roleowners-editable">true</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte füllen Sie das vorliegende Formular zur Meldung des Bedarfs an weiterem Personal aus.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_315D2DE9E0196085</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_C4BE4BEB1FC0781C" name="Mitarbeiterbedarf prüfen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Stelle wird ausgeschrieben","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"]}},{"name":"Begründung","type":"ProcessHubTextArea","isRequired":true,"config":{"conditionExpression":"field['Stelle wird ausgeschrieben']=='nein'","defaultValue":""}}]</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte prüfen Sie die vorliegende Meldung.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_315D2DE9E0196085</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_98740B38F0FD95CF</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_F55AB0867AB6D281">
+      <bpmn:incoming>SequenceFlow_81C3EF333460F89B</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_315D2DE9E0196085" sourceRef="StartEvent_6C52D664B2725BD1" targetRef="UserTask_C4BE4BEB1FC0781C" />
+    <bpmn:userTask id="UserTask_3DC1D401EEFFACA8" name="Stellenausschreibung verfassen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte verfassen Sie eine Stellenausschreibung zur vorliegenden Meldung.</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Beschreibung","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Ausschreibung","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_758A8BE5BCCA2097</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_BF84C7AB5222547F</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_9FEE209D7538C29C" name="Stellenausschreibung prüfen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte prüfen Sie die Stellenausschreibung.</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Die Ausschreibung kann so veröffentlich werden","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"]}},{"name":"Folgende Korrekturen sind notwendig","type":"ProcessHubTextArea","isRequired":true,"config":{"conditionExpression":"field['Die Ausschreibung kann so veröffentlich werden']=='nein'","defaultValue":""}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_BF84C7AB5222547F</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_14C83AC51E4A170B</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_F5A43494A133CA7B</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_BF84C7AB5222547F" sourceRef="UserTask_3DC1D401EEFFACA8" targetRef="UserTask_9FEE209D7538C29C" />
+    <bpmn:userTask id="UserTask_11787DB8B99B5C22" name="Stellenausschreibung korrigieren">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte korrigieren Sie die Stellenausschreibung.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Beschreibung","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Ausschreibung","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_2B5CD17268B1EB4B</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_14C83AC51E4A170B</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_3499B753D7E9AD5D" name="Stellenausschreibung veröffentlichen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte veröffentlichen Sie die Stellenausschreibung.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Stellenausschreibung wurde veröffentlicht","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"],"validationExpression":"field['Stellenausschreibung wurde veröffentlicht']=='ja'"}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_E6B015B7A7544061</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_81C3EF333460F89B</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_81C3EF333460F89B" sourceRef="UserTask_3499B753D7E9AD5D" targetRef="EndEvent_F55AB0867AB6D281" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_12F8883CD3F07A24" name="Ausschreibung?">
+      <bpmn:incoming>SequenceFlow_98740B38F0FD95CF</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_758A8BE5BCCA2097</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_84A4CAE94F30BCB2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_98740B38F0FD95CF" sourceRef="UserTask_C4BE4BEB1FC0781C" targetRef="ExclusiveGateway_12F8883CD3F07A24" />
+    <bpmn:sequenceFlow id="SequenceFlow_758A8BE5BCCA2097" name="ja" sourceRef="ExclusiveGateway_12F8883CD3F07A24" targetRef="UserTask_3DC1D401EEFFACA8">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression" />
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_12F8883CD3F07A24.userInput.choosenTaskId == 'UserTask_3DC1D401EEFFACA8'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sendTask id="SendTask_D34C4A7789EA78F5" name="Rückmeldung an Fachabteilung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Hallo role['Fachabteilung'].firstName role['Fachabteilung'].lastName,
+
+die Stelle "field['Bezeichnung']" wird aus folgendem Grund nicht ausgeschrieben:
+field['Begründung']
+
+Viele Grüße
+role['Personalabteilung'].firstName role['Personalabteilung'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_98FA24CDEDFA9A7C"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Stelle "field['Bezeichnung']" wird nicht ausgeschrieben</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">false</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">true</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">[]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_84A4CAE94F30BCB2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_94AC67912F0C11E5</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_84A4CAE94F30BCB2" name="nein" sourceRef="ExclusiveGateway_12F8883CD3F07A24" targetRef="SendTask_D34C4A7789EA78F5">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Stelle wird ausgeschrieben'] == 'nein')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_12F8883CD3F07A24.userInput.choosenTaskId == 'SendTask_D34C4A7789EA78F5'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_7C49B692D1E70AEA" name="i.O.?">
+      <bpmn:incoming>SequenceFlow_F5A43494A133CA7B</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_E6B015B7A7544061</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_2B5CD17268B1EB4B</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_E6B015B7A7544061" name="ja" sourceRef="ExclusiveGateway_7C49B692D1E70AEA" targetRef="UserTask_3499B753D7E9AD5D">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_7C49B692D1E70AEA.userInput.choosenTaskId == 'UserTask_3499B753D7E9AD5D'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_F5A43494A133CA7B" sourceRef="UserTask_9FEE209D7538C29C" targetRef="ExclusiveGateway_7C49B692D1E70AEA" />
+    <bpmn:sequenceFlow id="SequenceFlow_2B5CD17268B1EB4B" name="nein" sourceRef="ExclusiveGateway_7C49B692D1E70AEA" targetRef="UserTask_11787DB8B99B5C22">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Die Ausschreibung kann so veröffentlich werden'] == 'nein')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_7C49B692D1E70AEA.userInput.choosenTaskId == 'UserTask_11787DB8B99B5C22'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_14C83AC51E4A170B" sourceRef="UserTask_11787DB8B99B5C22" targetRef="UserTask_9FEE209D7538C29C" />
+    <bpmn:endEvent id="EndEvent_64AF93CE28A23C03">
+      <bpmn:incoming>SequenceFlow_94AC67912F0C11E5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_94AC67912F0C11E5" sourceRef="SendTask_D34C4A7789EA78F5" targetRef="EndEvent_64AF93CE28A23C03" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_D96329D2ECF05DD6">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_CB0525BC8F953C61">
+      <bpmndi:BPMNShape id="BPMNShape_864DFB780068550F" bpmnElement="Lane_98FA24CDEDFA9A7C">
+        <dc:Bounds x="430" y="0" width="1173" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_B14B68F8F67BBC48" bpmnElement="Lane_C7D850E28042B335">
+        <dc:Bounds x="430" y="125" width="1173" height="281" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_7B69C7786D353CCB" bpmnElement="Participant_CA2F64C0F294F0D3">
+        <dc:Bounds x="400" y="0" width="1203" height="406" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_9575D91D3FD22F51" bpmnElement="StartEvent_6C52D664B2725BD1">
+        <dc:Bounds x="517" y="45" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0A694A9ACFF36FCA" bpmnElement="UserTask_C4BE4BEB1FC0781C">
+        <dc:Bounds x="615" y="279" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_709FE452924FE306" bpmnElement="UserTask_3DC1D401EEFFACA8">
+        <dc:Bounds x="892" y="279" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_86A983321646D4E4" bpmnElement="UserTask_9FEE209D7538C29C">
+        <dc:Bounds x="1054" y="23" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_CB1C8466B1CC4584" bpmnElement="UserTask_11787DB8B99B5C22">
+        <dc:Bounds x="1054" y="279" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_24CF50553BB001EE" bpmnElement="UserTask_3499B753D7E9AD5D">
+        <dc:Bounds x="1378" y="279" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_CF7605A2B348C16C" bpmnElement="EndEvent_F55AB0867AB6D281">
+        <dc:Bounds x="1540" y="301" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_5B69A9DCB80BAF11" bpmnElement="SequenceFlow_315D2DE9E0196085" sourceElement="BPMNShape_9575D91D3FD22F51" targetElement="BPMNShape_0A694A9ACFF36FCA">
+        <di:waypoint x="553" y="63" />
+        <di:waypoint x="584" y="63" />
+        <di:waypoint x="584" y="319" />
+        <di:waypoint x="615" y="319" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_D5893E65BEB380AB" bpmnElement="SequenceFlow_BF84C7AB5222547F" sourceElement="BPMNShape_709FE452924FE306" targetElement="BPMNShape_86A983321646D4E4">
+        <di:waypoint x="992" y="319" />
+        <di:waypoint x="1023" y="319" />
+        <di:waypoint x="1023" y="63" />
+        <di:waypoint x="1054" y="63" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_6FE6D2C8F5D16DA7" bpmnElement="SequenceFlow_81C3EF333460F89B" sourceElement="BPMNShape_24CF50553BB001EE" targetElement="BPMNShape_CF7605A2B348C16C">
+        <di:waypoint x="1478" y="319" />
+        <di:waypoint x="1509" y="319" />
+        <di:waypoint x="1509" y="319" />
+        <di:waypoint x="1540" y="319" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_3AF394CD5B2DA63E" bpmnElement="ExclusiveGateway_12F8883CD3F07A24">
+        <dc:Bounds x="770" y="297" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_6EDC80A73418BF25" bpmnElement="SequenceFlow_98740B38F0FD95CF" sourceElement="BPMNShape_0A694A9ACFF36FCA" targetElement="BPMNShape_3AF394CD5B2DA63E">
+        <di:waypoint x="715" y="319" />
+        <di:waypoint x="770" y="318.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_BD0FC7CAB01657C0" bpmnElement="SequenceFlow_758A8BE5BCCA2097" sourceElement="BPMNShape_3AF394CD5B2DA63E" targetElement="BPMNShape_709FE452924FE306">
+        <di:waypoint x="813.173" y="318.5865" />
+        <di:waypoint x="892" y="319" />
+        <bpmndi:BPMNLabel id="BPMNEdge_BD0FC7CAB01657C0_label">
+          <dc:Bounds x="750.5865" y="292.79325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_E0BE3189E329B379" bpmnElement="SendTask_D34C4A7789EA78F5">
+        <dc:Bounds x="741.5865" y="139" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_A81C7CFE2E2D2008" bpmnElement="SequenceFlow_84A4CAE94F30BCB2" sourceElement="BPMNShape_3AF394CD5B2DA63E" targetElement="BPMNShape_E0BE3189E329B379">
+        <di:waypoint x="791.5865" y="297" />
+        <di:waypoint x="791.5865" y="219" />
+        <bpmndi:BPMNLabel id="BPMNEdge_A81C7CFE2E2D2008_label">
+          <dc:Bounds x="666.5865" y="230" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_888AD1EE3E0D969F" bpmnElement="ExclusiveGateway_7C49B692D1E70AEA">
+        <dc:Bounds x="1237" y="297" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_407B9892385CAF39" bpmnElement="SequenceFlow_E6B015B7A7544061" sourceElement="BPMNShape_888AD1EE3E0D969F" targetElement="BPMNShape_24CF50553BB001EE">
+        <di:waypoint x="1280.173" y="318.5865" />
+        <di:waypoint x="1378" y="319" />
+        <bpmndi:BPMNLabel id="BPMNEdge_407B9892385CAF39_label">
+          <dc:Bounds x="1221.0865" y="293.79325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_B24201673EADA640" bpmnElement="SequenceFlow_F5A43494A133CA7B" sourceElement="BPMNShape_86A983321646D4E4" targetElement="BPMNShape_888AD1EE3E0D969F">
+        <di:waypoint x="1154" y="63" />
+        <di:waypoint x="1258.5865" y="63" />
+        <di:waypoint x="1258.5865" y="297" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_381F52B4A1EE0B8D" bpmnElement="SequenceFlow_2B5CD17268B1EB4B" sourceElement="BPMNShape_888AD1EE3E0D969F" targetElement="BPMNShape_CB1C8466B1CC4584">
+        <di:waypoint x="1237" y="318.5865" />
+        <di:waypoint x="1154" y="319" />
+        <bpmndi:BPMNLabel id="BPMNEdge_381F52B4A1EE0B8D_label">
+          <dc:Bounds x="1089.5" y="294.79325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_80F8D1482EB367DC" bpmnElement="SequenceFlow_14C83AC51E4A170B" sourceElement="BPMNShape_CB1C8466B1CC4584" targetElement="BPMNShape_86A983321646D4E4">
+        <di:waypoint x="1104" y="279" />
+        <di:waypoint x="1104" y="103" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_59B8CC8CC1EF32F7" bpmnElement="EndEvent_64AF93CE28A23C03">
+        <dc:Bounds x="923" y="160" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_A915BC63CBC3E266" bpmnElement="SequenceFlow_94AC67912F0C11E5" sourceElement="BPMNShape_E0BE3189E329B379" targetElement="BPMNShape_59B8CC8CC1EF32F7">
+        <di:waypoint x="841.5865" y="179" />
+        <di:waypoint x="923" y="178.595" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

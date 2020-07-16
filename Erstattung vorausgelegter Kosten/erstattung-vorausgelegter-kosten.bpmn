@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_87937B1E389899DF">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.24.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_196F047AE02F8C2C">
+    <bpmn:participant id="Participant_3624CDE0CE2F7835" name="Erstattung vorausgelegter Kosten" processRef="Process_868B19DBDA83E36E" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_868B19DBDA83E36E" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_A3E909EFCB2C856C">
+      <bpmn:lane id="Lane_CE8F981D521556AD" name="Antragsteller(in)">
+        <bpmn:flowNodeRef>StartEvent_41915A03FE9384A4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_F4849E137602CFC9</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_98DDCB29ED921B7E" name="Reisekostenmanagement">
+        <bpmn:flowNodeRef>UserTask_9EE1B7D6828927F1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_DB25D95F0A5007BC</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_2BA76FDC3A786A2D</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_915F58D3F4DF6CF2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_B4E3B56253654857</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_5FEB2E0FEC05DA07</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_41915A03FE9384A4" name="Erstattung vorausgelegter Kosten abgeben">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Starten Sie hier den Antrag auf Erstattung der vorausgelegten Kosten.</processhub:inputParameter>
+          <processhub:inputParameter name="roleowners-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Notiz","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"","defaultValue":""}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_0814E3CE29B6F087</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_9EE1B7D6828927F1" name="Bearbeitung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">259200</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Antrag stattgegeben?","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein","Korrekturen erforderlich"]}},{"name":"Begründung","type":"ProcessHubTextArea","isRequired":true,"config":{"conditionExpression":"field['Antrag stattgegeben?']=='nein'","defaultValue":""}},{"name":"Hinweis","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Antrag stattgegeben?']=='ja'","defaultValue":""}},{"name":"erforderliche Korrekturen","type":"ProcessHubTextArea","isRequired":true,"config":{"conditionExpression":"field['Antrag stattgegeben?']=='Korrekturen erforderlich'","defaultValue":""}}]</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte prüfen Sie den Antrag auf Erstattung der verauslagten Kosten.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_DCE740F709FA592B</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_4A760DC3B172BD6A</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_DB25D95F0A5007BC">
+      <bpmn:incoming>SequenceFlow_9F4EA3DB61DE1475</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="SendTask_2BA76FDC3A786A2D" name="Antrag stattgegeben">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Guten Tag role['Antragsteller(in)'].firstName role['Antragsteller(in)'].lastName,
+
+Ihrem Antrag auf Erstattung der vorausgelegten Kosten wurde stattgegeben.
+Der angegebene Betrag wird zeitnah auf das von Ihnen angegebene Konto überwiesen.
+
+Viele Grüße
+role['Reisekostenmanagement'].firstName role['Reisekostenmanagement'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_CE8F981D521556AD"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Antrag auf Erstattung verauslagter Kosten wurde stattgegeben</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">false</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">null</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_A07782139FF7FDEC</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_9F4EA3DB61DE1475</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_9F4EA3DB61DE1475" sourceRef="SendTask_2BA76FDC3A786A2D" targetRef="EndEvent_DB25D95F0A5007BC" />
+    <bpmn:userTask id="UserTask_F4849E137602CFC9" name="Antrag stellen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">false</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Verauslagte Kosten (in Euro)","type":"ProcessHubTextInput","isRequired":true,"config":{}},{"name":"Verwendungszweck","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"IBAN-Nr.","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"SWIFT","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Geldinstitut","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Adresse der Bank","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Kostenstelle/Auftrag","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Rechnung 1","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Rechnung 2","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Rechnung 3","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Begründung","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Antrag stattgegeben?']=='nein'","defaultValue":""}}]</processhub:inputParameter>
+          <processhub:inputParameter name="description">Füllen Sie nachfolgend den Antrag auf Erstattung der verauslagten Kosten aus.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0814E3CE29B6F087</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_86F72ADC82FF2884</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_DCE740F709FA592B</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0814E3CE29B6F087" sourceRef="StartEvent_41915A03FE9384A4" targetRef="UserTask_F4849E137602CFC9" />
+    <bpmn:sequenceFlow id="SequenceFlow_DCE740F709FA592B" sourceRef="UserTask_F4849E137602CFC9" targetRef="UserTask_9EE1B7D6828927F1" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_915F58D3F4DF6CF2" name="Antrag stattgegeben?">
+      <bpmn:incoming>SequenceFlow_4A760DC3B172BD6A</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_A07782139FF7FDEC</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_3F932D482E2AC9F7</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_86F72ADC82FF2884</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_4A760DC3B172BD6A" sourceRef="UserTask_9EE1B7D6828927F1" targetRef="ExclusiveGateway_915F58D3F4DF6CF2" />
+    <bpmn:sequenceFlow id="SequenceFlow_A07782139FF7FDEC" name="ja" sourceRef="ExclusiveGateway_915F58D3F4DF6CF2" targetRef="SendTask_2BA76FDC3A786A2D">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Antrag stattgegeben?'] == 'ja')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_915F58D3F4DF6CF2.userInput.choosenTaskId == 'SendTask_2BA76FDC3A786A2D'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sendTask id="SendTask_B4E3B56253654857" name="Antrag nicht stattgegeben">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Guten Tag role['Antragsteller(in)'].firstName role['Antragsteller(in)'].lastName,
+
+Ihrem Antrag auf Erstattung der vorausgelegten Kosten wurde nicht stattgegeben.
+Begründung: field['Begründung']
+
+Viele Grüße
+role['Reisekostenmanagement'].firstName role['Reisekostenmanagement'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_CE8F981D521556AD"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Antrag auf Erstattung verauslagter Kosten wurde nicht stattgegeben</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">true</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">[]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_3F932D482E2AC9F7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_10E6575FDEB3F496</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="EndEvent_5FEB2E0FEC05DA07">
+      <bpmn:incoming>SequenceFlow_10E6575FDEB3F496</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_3F932D482E2AC9F7" name="nein" sourceRef="ExclusiveGateway_915F58D3F4DF6CF2" targetRef="SendTask_B4E3B56253654857">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_915F58D3F4DF6CF2.userInput.choosenTaskId == 'SendTask_B4E3B56253654857'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_10E6575FDEB3F496" sourceRef="SendTask_B4E3B56253654857" targetRef="EndEvent_5FEB2E0FEC05DA07" />
+    <bpmn:sequenceFlow id="SequenceFlow_86F72ADC82FF2884" name="Korrekturen erforderlich" sourceRef="ExclusiveGateway_915F58D3F4DF6CF2" targetRef="UserTask_F4849E137602CFC9">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Antrag stattgegeben?'] == 'Korrekturen erforderlich')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_915F58D3F4DF6CF2.userInput.choosenTaskId == 'UserTask_F4849E137602CFC9'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_2E126CBE081D9EDC">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_196F047AE02F8C2C">
+      <bpmndi:BPMNShape id="BPMNShape_16C8E7E6E6F7A353" bpmnElement="Lane_CE8F981D521556AD">
+        <dc:Bounds x="430" y="0" width="1093" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_6AA94926B26116E9" bpmnElement="Lane_98DDCB29ED921B7E">
+        <dc:Bounds x="430" y="125" width="1093" height="295" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_7C25ABA66AEDAB27" bpmnElement="Participant_3624CDE0CE2F7835">
+        <dc:Bounds x="400" y="0" width="1123" height="420" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_68D3D6BA196091B6" bpmnElement="StartEvent_41915A03FE9384A4">
+        <dc:Bounds x="600" y="45" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_389AF0F2480EEDEB" bpmnElement="UserTask_9EE1B7D6828927F1">
+        <dc:Bounds x="910" y="233" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_741CEFE604EE7726" bpmnElement="EndEvent_DB25D95F0A5007BC">
+        <dc:Bounds x="1432" y="195" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_9D58778826583184" bpmnElement="SendTask_2BA76FDC3A786A2D">
+        <dc:Bounds x="1250" y="173" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_033CCC956DD20520" bpmnElement="SequenceFlow_9F4EA3DB61DE1475" sourceElement="BPMNShape_9D58778826583184" targetElement="BPMNShape_741CEFE604EE7726">
+        <di:waypoint x="1350" y="213" />
+        <di:waypoint x="1432" y="213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_A19C47E977C10DE2" bpmnElement="UserTask_F4849E137602CFC9">
+        <dc:Bounds x="784.078" y="23" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_82544A193A952BAD" bpmnElement="SequenceFlow_0814E3CE29B6F087" sourceElement="BPMNShape_68D3D6BA196091B6" targetElement="BPMNShape_A19C47E977C10DE2">
+        <di:waypoint x="636" y="63" />
+        <di:waypoint x="784.078" y="63" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_6E00DE95AC26DF23" bpmnElement="SequenceFlow_DCE740F709FA592B" sourceElement="BPMNShape_A19C47E977C10DE2" targetElement="BPMNShape_389AF0F2480EEDEB">
+        <di:waypoint x="834.078" y="103" />
+        <di:waypoint x="834.078" y="273" />
+        <di:waypoint x="910" y="273" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_2F0126577F054526" bpmnElement="ExclusiveGateway_915F58D3F4DF6CF2">
+        <dc:Bounds x="1068" y="251" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_CC03808391CF0DC9" bpmnElement="SequenceFlow_4A760DC3B172BD6A" sourceElement="BPMNShape_389AF0F2480EEDEB" targetElement="BPMNShape_2F0126577F054526">
+        <di:waypoint x="1010" y="273" />
+        <di:waypoint x="1068" y="272.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_F3AF40842C9C0D61" bpmnElement="SequenceFlow_A07782139FF7FDEC" sourceElement="BPMNShape_2F0126577F054526" targetElement="BPMNShape_9D58778826583184">
+        <di:waypoint x="1111.173" y="272.5865" />
+        <di:waypoint x="1205.5865" y="272.5865" />
+        <di:waypoint x="1205.5865" y="213" />
+        <di:waypoint x="1250" y="213" />
+        <bpmndi:BPMNLabel id="BPMNEdge_F3AF40842C9C0D61_label">
+          <dc:Bounds x="1089.5865" y="219.79325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_D8F00DEC44C5CFFC" bpmnElement="SendTask_B4E3B56253654857">
+        <dc:Bounds x="1250" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_6016065CA5FA3228" bpmnElement="EndEvent_5FEB2E0FEC05DA07">
+        <dc:Bounds x="1431" y="311" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_200FCD342B73E494" bpmnElement="SequenceFlow_3F932D482E2AC9F7" sourceElement="BPMNShape_2F0126577F054526" targetElement="BPMNShape_D8F00DEC44C5CFFC">
+        <di:waypoint x="1111.173" y="272.5865" />
+        <di:waypoint x="1205.5865" y="272.5865" />
+        <di:waypoint x="1205.5865" y="330" />
+        <di:waypoint x="1250" y="330" />
+        <bpmndi:BPMNLabel id="BPMNEdge_200FCD342B73E494_label">
+          <dc:Bounds x="1080.5865" y="310.29325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_3495C80A434AE3BB" bpmnElement="SequenceFlow_10E6575FDEB3F496" sourceElement="BPMNShape_D8F00DEC44C5CFFC" targetElement="BPMNShape_6016065CA5FA3228">
+        <di:waypoint x="1350" y="330" />
+        <di:waypoint x="1431" y="329.595" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_3625E17D4A92B327" bpmnElement="SequenceFlow_86F72ADC82FF2884" sourceElement="BPMNShape_2F0126577F054526" targetElement="BPMNShape_A19C47E977C10DE2">
+        <di:waypoint x="1089.5865" y="251" />
+        <di:waypoint x="1090" y="63" />
+        <di:waypoint x="884.078" y="63" />
+        <bpmndi:BPMNLabel id="BPMNEdge_3625E17D4A92B327_label">
+          <dc:Bounds x="990.039" y="160" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

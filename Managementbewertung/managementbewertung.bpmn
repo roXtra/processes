@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_C02B5557B4FCB2A3">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.24.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_AA8DA553607155E4">
+    <bpmn:participant id="Participant_9DF56C6D76CE5420" name="Managementbewertung" processRef="Process_C7D50E142649268A" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_C7D50E142649268A" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_7D6C8B759351A95D">
+      <bpmn:lane id="Lane_C88B4A36181B14DA" name="oberste Leitung">
+        <bpmn:flowNodeRef>StartEvent_E68D32D85B6E6F86</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_80D33758FE74D9DB</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_6843ABE3F764F6C4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_8D7CD2CFEBA7D9A8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_BE3F3735EEBA7AEC</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_E68D32D85B6E6F86" name="Managementbewertung beginnen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Bericht für das Kalenderjahr","type":"ProcessHubTextInput","isRequired":true,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="roleowners-editable">true</processhub:inputParameter>
+          <processhub:inputParameter name="description">Nach DIN EN ISO 9001:2015-11 ist das Qualitätsmanagementsystem in regelmäßigen Abständen durch die oberste Leitung zu bewerten. Dabei muss dessen Eignung, Angemessenheit, Wirksamkeit und das Zusammenspiel mit der strategischen Ausrichtung der Organisation sichergestellt werden.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_697165561AEE3C41</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_80D33758FE74D9DB" name="Bewertung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte bewerten Sie die Aspekte des Qualitätsmanagementsystems.</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Status von Maßnahmen","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Status von Ma&amp;szlig;nahmen vorheriger Managementbewertungen&lt;/h3&gt;"}},{"name":"Hinweise zum Maßnahmenstatus","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: letzte Managementbewertung&lt;/p&gt;"}},{"name":"Anlagen zum Status von Maßnahmen vorheriger Managementbewertungen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung des Maßnahmenstatus","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf (Maßnahmen)","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"externe und interne Themen","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Ver&amp;auml;nderungen&amp;nbsp;bei externen&amp;nbsp;und&amp;nbsp;internen&amp;nbsp;Themen die das QM-System /QM-&amp;nbsp;Strategie betreffen&lt;/h3&gt;"}},{"name":"Hinweise zu Veränderungen bei externen und internen Themen","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Formblatt zum Kontext der Organisation&lt;/p&gt;"}},{"name":"Anlagen zu externen und internen Themen die das QM-System betreffen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung Veränderung interne und externe Themen","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf (externe und interne Themen)","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Leistung und Wirksamkeit","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Informationen &amp;uuml;ber die Leistung und Wirksamkeit des QM-Systems&lt;/h3&gt;"}},{"name":"Hinweise zur Leistung und Wirksamkeit","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Beschwerdemanagement, Kundenbefragung, R&amp;uuml;ckmeldung relevanter interessierter Parteien&lt;/p&gt;"}},{"name":"Anlagen zu Informationen über die Leistung und Wirksamkeit des QM-Systems","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung Leistung und Wirksamkeit","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf Leistung und Wirksamkeit","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Erfüllungsgrad Qualitätsziele","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Erf&amp;uuml;llungsgrad der Qualit&amp;auml;tsziele&lt;/h3&gt;"}},{"name":"Hinweise zum Erfüllungsgrad der Qualitätsziele","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Kennzahlen, Qualit&amp;auml;tsziele&lt;/p&gt;"}},{"name":"Anlagen zum Erfüllungsgrad der Qualitätsziele","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung des Erfüllungsgrads","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf zur Erfüllung der Qualitätsziele","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Prozessleistung und Konformität","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Status der Prozessleistung und Konformit&amp;auml;t von Produkten und Dienstleistungen&lt;/h3&gt;"}},{"name":"Hinweise zur Prozessleistung und Konformität","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Kennzahlen&lt;/p&gt;"}},{"name":"Anlagen zum Status der Prozessleistung und Konformität von Produkten und Dienstleistungen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung Prozessleistung und Konformität","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf Prozessleistung und Konformität","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Nichtkonformität und Korrekturmaßnahmen","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&lt;strong style=\"font-size:1.28571rem;\"&gt;&lt;span style=\"font-size:11.0pt;line-height:105%;font-family:'Arial',sans-serif;\"&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/h3&gt;&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Nichtkonformit&amp;auml;t und Korrekturma&amp;szlig;nahmen&lt;/h3&gt;"}},{"name":"Hinweise zur Nichtkonformität und Korrekturmaßnahmen","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Ergebnisse der Audits, Ma&amp;szlig;nahmen&amp;uuml;bersicht&lt;/p&gt;"}},{"name":"Anlagen zu Nichtkonformität und Korrekturmaßnahmen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung Nichtkonformität und Korrekturmaßnahmen","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf Nichtkonformität und Korrekturmaßnahmen","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Ergebnisse von Überwachungen und Messungen","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Ergebnisse von &amp;Uuml;berwachungen und Messungen&lt;/h3&gt;"}},{"name":"Hinweise zu Ergebnissen von Überwachungen und Messungen","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Kennzahlen, Qualit&amp;auml;tspr&amp;uuml;fungen, Reklamationen&lt;/p&gt;"}},{"name":"Anlagen zu Ergebnissen von Überwachungen und Messungen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung der Ergebnisse von Überwachungen und Messungen","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf zu Ergebnissen von Überwachungen und Messungen","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Ergebnisse externer und interner Audits","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Ergebnisse externer und interner Audits&lt;/h3&gt;"}},{"name":"Hinweise zu Ergebnissen externer und interner Audits","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Auditberichte, Ma&amp;szlig;nahmen&amp;uuml;bersicht&lt;/p&gt;"}},{"name":"Anlagen zu Ergebnissen externer und interner Audits","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung der Ergebnisse externer und interner Audits","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf zu den Ergebnissen externer und interner Audits","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Leistung externer Anbieter","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Leistung externer Anbieter&lt;/h3&gt;"}},{"name":"Hinweise zur Leistung externer Anbieter","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Lieferantenbewertung&lt;/p&gt;"}},{"name":"Anlagen zur Leistung externer Anbieter","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung der Leistung externer Anbieter","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf zur Leistung externer Anbieter","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Angemessenheit von Ressourcen zur Weiterentwicklung","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Angemessenheit von Ressourcen zur Weiterentwicklung des QM-Systems&lt;/h3&gt;"}},{"name":"Hinweise zur Angemessenheit von Ressourcen","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Investitionspl&amp;auml;ne, Instandhaltungskosten&lt;/p&gt;"}},{"name":"Anlagen zur Angemessenheit von Ressourcen zur Weiterentwicklung des QM-Systems","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung der Angemessenheit von Ressourcen","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf zur Angemessenheit von Ressourcen","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Wirksamkeit der durchgeführten Maßnahmen zum Umgang mit Risiken und Chancen","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;Wirksamkeit der durchgef&amp;uuml;hrten Ma&amp;szlig;nahmen zum Umgang mit Risiken und Chancen&lt;/h3&gt;"}},{"name":"Hinweise zur Wirksamkeit der durchgeführten Maßnahmen","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Ma&amp;szlig;nahmen&amp;uuml;bersicht, Risikobewertung, &amp;Uuml;bersicht der Chancen und Risiken&lt;/p&gt;"}},{"name":"Anlagen zur Wirksamkeit der durchgeführten Maßnahmen zum Umgang mit Risiken und Chancen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung der Wirksamkeit der durchgeführten Maßnahmen","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf zur Wirksamkeit der durchgeführten Maßnahmen","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Möglichkeiten zur Verbesserung","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;M&amp;ouml;glichkeiten zur Verbesserung&lt;/h3&gt;"}},{"name":"Hinweise zu Möglichkeiten zur Verbesserung","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":"&lt;p&gt;siehe: Ma&amp;szlig;nahmen&amp;uuml;bersicht, Vorschl&amp;auml;ge zur Verbesserung (KVP-Anmerkungen), Managementbewertung, Qualit&amp;auml;tsziele, Kennzahlen, Ergebnisse von &amp;Uuml;berwachungen und Messungen (Controlling)&lt;/p&gt;"}},{"name":"Anlangen zu Möglichkeiten zur Verbesserung","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung von Möglichkeiten zur Verbesserung","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungsbedarf zu Möglichkeiten zur Verbesserung","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Änderungsbedarf am QM-System","type":"ProcessHubLabel","isRequired":false,"config":{"labelHtml":"&lt;h3&gt;&amp;nbsp;&lt;/h3&gt;&lt;h3&gt;&amp;Auml;nderungsbedarf am QM-System&lt;/h3&gt;"}},{"name":"Hinweise zum Änderungsbedarf am QM-System","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":""}},{"name":"Anlagen zum Änderungsbedarf am QM-System","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Bewertung des Änderungsbedarfs am QM-System","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["positiv","eher positiv","neutral","eher negativ","negativ"]}},{"name":"Handlungs- und Änderungsbedarf am QM-System","type":"ProcessHubTextArea","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_697165561AEE3C41</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_7ADA52805EA14107</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1490DB2472EFF50E</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_6843ABE3F764F6C4" name="Zusammenfassung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte schließen Sie die Managementbewertung ab. Im Anschluss können Sie die abgeschlossene Bewertung in der Ansicht "Vorgangsliste" auswählen und einen Bericht (im Word oder PDF Format) erzeugen.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">false</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Abschließender Kommentar","type":"ProcessHubTextArea","isRequired":false,"config":{}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1490DB2472EFF50E</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_76C61F1167AAB26B</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_8D7CD2CFEBA7D9A8">
+      <bpmn:incoming>SequenceFlow_76C61F1167AAB26B</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_697165561AEE3C41" sourceRef="StartEvent_E68D32D85B6E6F86" targetRef="UserTask_80D33758FE74D9DB" />
+    <bpmn:sequenceFlow id="SequenceFlow_1490DB2472EFF50E" sourceRef="UserTask_80D33758FE74D9DB" targetRef="UserTask_6843ABE3F764F6C4" />
+    <bpmn:sequenceFlow id="SequenceFlow_76C61F1167AAB26B" sourceRef="UserTask_6843ABE3F764F6C4" targetRef="EndEvent_8D7CD2CFEBA7D9A8" />
+    <bpmn:startEvent id="StartEvent_BE3F3735EEBA7AEC">
+      <bpmn:outgoing>SequenceFlow_7ADA52805EA14107</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT0S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_7ADA52805EA14107" sourceRef="StartEvent_BE3F3735EEBA7AEC" targetRef="UserTask_80D33758FE74D9DB" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_034F95C2D89617D9">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_AA8DA553607155E4">
+      <bpmndi:BPMNShape id="BPMNShape_3F64D6A994012A74" bpmnElement="Lane_C88B4A36181B14DA">
+        <dc:Bounds x="430" y="0" width="580" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_AB991C52880CF617" bpmnElement="Participant_9DF56C6D76CE5420">
+        <dc:Bounds x="400" y="0" width="610" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_C64DC0C940440B34" bpmnElement="StartEvent_E68D32D85B6E6F86">
+        <dc:Bounds x="530" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_AF8D9524E39EF10A" bpmnElement="UserTask_80D33758FE74D9DB">
+        <dc:Bounds x="628" y="90" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0DF402BC353866B4" bpmnElement="UserTask_6843ABE3F764F6C4">
+        <dc:Bounds x="790" y="90" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_23C7E69F71D70AA2" bpmnElement="EndEvent_8D7CD2CFEBA7D9A8">
+        <dc:Bounds x="952" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_DF76FBD739282847" bpmnElement="SequenceFlow_697165561AEE3C41" sourceElement="BPMNShape_C64DC0C940440B34" targetElement="BPMNShape_AF8D9524E39EF10A">
+        <di:waypoint x="566" y="180" />
+        <di:waypoint x="597" y="180" />
+        <di:waypoint x="597" y="130" />
+        <di:waypoint x="628" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_12883F014BBBA277" bpmnElement="SequenceFlow_1490DB2472EFF50E" sourceElement="BPMNShape_AF8D9524E39EF10A" targetElement="BPMNShape_0DF402BC353866B4">
+        <di:waypoint x="728" y="130" />
+        <di:waypoint x="790" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_B7C448CEAC21928D" bpmnElement="SequenceFlow_76C61F1167AAB26B" sourceElement="BPMNShape_0DF402BC353866B4" targetElement="BPMNShape_23C7E69F71D70AA2">
+        <di:waypoint x="890" y="130" />
+        <di:waypoint x="952" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_BF4ABD279D61DEF0" bpmnElement="StartEvent_BE3F3735EEBA7AEC">
+        <dc:Bounds x="529" y="71" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_531064CC29AA5B60" bpmnElement="SequenceFlow_7ADA52805EA14107" sourceElement="BPMNShape_BF4ABD279D61DEF0" targetElement="BPMNShape_AF8D9524E39EF10A">
+        <di:waypoint x="566.19" y="89.595" />
+        <di:waypoint x="597.095" y="89.595" />
+        <di:waypoint x="597.095" y="130" />
+        <di:waypoint x="628" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

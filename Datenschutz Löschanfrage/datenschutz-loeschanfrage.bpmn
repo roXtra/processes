@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_083BCD54472C5E8E">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.27.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_C5FD7A1E573B29AA">
+    <bpmn:participant id="Participant_35BA8D123C67339D" name="Datenschutz - Löschanfrage" processRef="Process_53E2BDE1975B7F14" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_53E2BDE1975B7F14" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_BF431B0EFBB6D951">
+      <bpmn:lane id="Lane_B7CEF8D2F0DABCE0" name="Ersteller/in">
+        <bpmn:flowNodeRef>StartEvent_B9ECE571212D7384</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_FB92900992901AA9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_CA04B24D2275CA07</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_110CF96F7D51B166" name="Datenschutzbeauftragte/r">
+        <bpmn:flowNodeRef>UserTask_E1B7FD2DFB3D7995</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_0C8CE1C8CC291093</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_9DFDA5E0BA48BF8F</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_CCAD1168848ECC28</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_30115E7187A12652" name="Geschäftsführung">
+        <bpmn:flowNodeRef>UserTask_E542DC410C2EDA5A</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:userTask id="UserTask_E1B7FD2DFB3D7995" name="Prüfung der Anfrage">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Anfrage berechtigt und vollständig?","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"]}},{"name":"Kommentar DSB","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Anfrage berechtigt und vollständig?']=='ja'","defaultValue":""}},{"name":"Begründung DSB","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Anfrage berechtigt und vollständig?']=='nein'","defaultValue":""}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">259200</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">true</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte prüfen Sie die vorliegende Löschungsanfrage.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_DAAADA8174AA8B8F</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_6290FBEA9E4CB64D</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_E542DC410C2EDA5A" name="Bearbeitung der Anfrage">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Kommentar GF","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Daten wurden gelöscht?","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"],"validationExpression":"field['Daten wurden gelöscht?']=='ja'"}},{"name":"Datum der Löschung","type":"ProcessHubDateTime","isRequired":false,"config":{"conditionExpression":"field['Daten wurden gelöscht?']=='ja'"}},{"name":"Anlagen GF","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">604800</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">true</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte bearbeiten Sie die vorliegende Löschungsanfrage.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_31ACE29047F20DCA</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_CA9B76FB5DF025F9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_9DFDA5E0BA48BF8F">
+      <bpmn:incoming>SequenceFlow_F2A4F5C823DB10E0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="UserTask_0C8CE1C8CC291093" name="Dokumentation und Rückmeldung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Kommentar Dokumentation","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Ersteller benachrichtigt?","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"],"validationExpression":"field['Ersteller benachrichtigt?']=='ja'"}},{"name":"Datum der Löschung","type":"ProcessHubDateTime","isRequired":false,"config":{"conditionExpression":"field['Daten wurden gelöscht?']=='ja'"}},{"name":"Anlagen Dokumentation","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">604800</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">true</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte dokumentieren Sie die Löschung der Daten und benachrichtigen Sie den Ersteller der Anfrage.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_CA9B76FB5DF025F9</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_F2A4F5C823DB10E0</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_CA9B76FB5DF025F9" sourceRef="UserTask_E542DC410C2EDA5A" targetRef="UserTask_0C8CE1C8CC291093" />
+    <bpmn:sequenceFlow id="SequenceFlow_F2A4F5C823DB10E0" sourceRef="UserTask_0C8CE1C8CC291093" targetRef="EndEvent_9DFDA5E0BA48BF8F" />
+    <bpmn:startEvent id="StartEvent_B9ECE571212D7384" name="Löschanfrage stellen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Anfragende Person","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Kontaktdaten und Hinweise des Erstellers","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Grund für die Löschungsanfrage","type":"ProcessHubChecklist","isRequired":true,"config":{"entries":[{"name":"a) Die personenbezogenen Daten sind für die Zwecke, für die sie erhoben oder auf sonstige Weise verarbeitet wurden, nicht mehr notwendig."},{"name":"b) Die betroffene Person widerruft ihre Einwilligung, auf die sich die Verarbeitung gemäß Artikel 6 Absatz 1 Buchstabe a oder Artikel 9 Absatz 2 Buchstabe a stützte, und es fehlt an einer anderweitigen Rechtsgrundlage für die Verarbeitung."},{"name":"c) Die betroffene Person legt gemäß Artikel 21 Absatz 1 Widerspruch gegen die Verarbeitung ein und es liegen keine vorrangigen berechtigten Gründe für die Verarbeitung vor, oder die betroffene Person legt gemäß Artikel 21 Absatz 2 Widerspruch gegen die Verarbeitung ein."},{"name":"d) Die personenbezogenen Daten wurden unrechtmäßig verarbeitet."},{"name":"e) Die Löschung der personenbezogenen Daten ist zur Erfüllung einer rechtlichen Verpflichtung nach dem Unionsrecht oder dem Recht der Mitgliedstaaten erforderlich, dem der Verantwortliche unterliegt."},{"name":"f) Die personenbezogenen Daten wurden in Bezug auf angebotene Dienste der Informationsgesellschaft gemäß Artikel 8 Absatz 1 erhoben."}],"oneEntryMustBeChecked":true,"defaultValue":{}}},{"name":"Anlagen","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="roleowners-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="description">Art. 17 DSGVO Recht auf Löschung ("Recht auf Vergessenwerden")
+
+Die betroffene Person hat das Recht, von dem Verantwortlichen zu verlangen, dass sie betreffende personenbezogene Daten unverzüglich gelöscht werden, und der Verantwortliche ist verpflichtet, personenbezogene Daten unverzüglich zu löschen, sofern einer der unten aufgelisteten Gründe zutrifft.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_DAAADA8174AA8B8F</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_DAAADA8174AA8B8F" sourceRef="StartEvent_B9ECE571212D7384" targetRef="UserTask_E1B7FD2DFB3D7995" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_CCAD1168848ECC28" name="Anfrage begründet und vollständig?">
+      <bpmn:incoming>SequenceFlow_6290FBEA9E4CB64D</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_31ACE29047F20DCA</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_11AB125480514609</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_6290FBEA9E4CB64D" sourceRef="UserTask_E1B7FD2DFB3D7995" targetRef="ExclusiveGateway_CCAD1168848ECC28" />
+    <bpmn:sequenceFlow id="SequenceFlow_31ACE29047F20DCA" name="ja" sourceRef="ExclusiveGateway_CCAD1168848ECC28" targetRef="UserTask_E542DC410C2EDA5A">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_CCAD1168848ECC28.userInput.choosenTaskId == 'UserTask_E542DC410C2EDA5A'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_FB92900992901AA9">
+      <bpmn:incoming>SequenceFlow_ED489A186FEFFC2B</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="SendTask_CA04B24D2275CA07" name="Anfrage abgelehnt">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Guten Tag role['Ersteller/in'].firstName role['Ersteller/in'].lastName,
+
+Ihre Auskunftsanfrage wurde abgelehnt.
+Begründung: field['Begründung DSB']
+
+Viele Grüße
+role['Datenschutzbeauftragte/r'].firstName role['Datenschutzbeauftragte/r'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_B7CEF8D2F0DABCE0"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Löschungsanfrage wurde abgelehnt</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">false</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">true</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send" />
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_11AB125480514609</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_ED489A186FEFFC2B</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_11AB125480514609" name="nein" sourceRef="ExclusiveGateway_CCAD1168848ECC28" targetRef="SendTask_CA04B24D2275CA07">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Anfrage berechtigt und vollständig?'] == 'nein')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_CCAD1168848ECC28.userInput.choosenTaskId == 'SendTask_CA04B24D2275CA07'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_ED489A186FEFFC2B" sourceRef="SendTask_CA04B24D2275CA07" targetRef="EndEvent_FB92900992901AA9" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_071ABBCE981E70F9">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_C5FD7A1E573B29AA">
+      <bpmndi:BPMNShape id="BPMNShape_4500E08E0AB75DF8" bpmnElement="Lane_B7CEF8D2F0DABCE0">
+        <dc:Bounds x="430" y="0" width="930" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_D50B0A6630611126" bpmnElement="Lane_110CF96F7D51B166">
+        <dc:Bounds x="430" y="125" width="930" height="169.70675" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_304C48D2080DBD04" bpmnElement="Lane_30115E7187A12652">
+        <dc:Bounds x="430" y="294.70675" width="930" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_61DF7EFD4FDFFD54" bpmnElement="Participant_35BA8D123C67339D">
+        <dc:Bounds x="400" y="0" width="960" height="419.70675" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EA5AEDB25AF68A4F" bpmnElement="UserTask_E1B7FD2DFB3D7995">
+        <dc:Bounds x="598" y="148" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_9137D90F10AB7244" bpmnElement="UserTask_E542DC410C2EDA5A">
+        <dc:Bounds x="760" y="317" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_105273961E4383E1" bpmnElement="UserTask_0C8CE1C8CC291093">
+        <dc:Bounds x="1119" y="148" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_689B0E09E07F2DCE" bpmnElement="EndEvent_9DFDA5E0BA48BF8F">
+        <dc:Bounds x="1281" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_4DD66EE4BF2B4106" bpmnElement="SequenceFlow_CA9B76FB5DF025F9" sourceElement="BPMNShape_9137D90F10AB7244" targetElement="BPMNShape_105273961E4383E1">
+        <di:waypoint x="860" y="357" />
+        <di:waypoint x="1069" y="357" />
+        <di:waypoint x="1069" y="188" />
+        <di:waypoint x="1119" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_E0627D970BBCBE80" bpmnElement="SequenceFlow_F2A4F5C823DB10E0" sourceElement="BPMNShape_105273961E4383E1" targetElement="BPMNShape_689B0E09E07F2DCE">
+        <di:waypoint x="1219" y="188" />
+        <di:waypoint x="1250" y="188" />
+        <di:waypoint x="1250" y="188" />
+        <di:waypoint x="1281" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_6354E0106BDDDE5E" bpmnElement="StartEvent_B9ECE571212D7384">
+        <dc:Bounds x="500" y="45" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_C464058A8CC8E4D2" bpmnElement="SequenceFlow_DAAADA8174AA8B8F" sourceElement="BPMNShape_6354E0106BDDDE5E" targetElement="BPMNShape_EA5AEDB25AF68A4F">
+        <di:waypoint x="536" y="63" />
+        <di:waypoint x="567" y="63" />
+        <di:waypoint x="567" y="188" />
+        <di:waypoint x="598" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_25AC1D360182860E" bpmnElement="ExclusiveGateway_CCAD1168848ECC28">
+        <dc:Bounds x="788" y="166" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_863C14A0D640825B" bpmnElement="SequenceFlow_6290FBEA9E4CB64D" sourceElement="BPMNShape_EA5AEDB25AF68A4F" targetElement="BPMNShape_25AC1D360182860E">
+        <di:waypoint x="698" y="188" />
+        <di:waypoint x="788" y="187.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_17ACB2C3E9693D46" bpmnElement="SequenceFlow_31ACE29047F20DCA" sourceElement="BPMNShape_25AC1D360182860E" targetElement="BPMNShape_9137D90F10AB7244">
+        <di:waypoint x="809.5865" y="209.173" />
+        <di:waypoint x="810" y="317" />
+        <bpmndi:BPMNLabel id="BPMNEdge_17ACB2C3E9693D46_label">
+          <dc:Bounds x="729.79325" y="246.0865" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_B50C98637104D3AE" bpmnElement="EndEvent_FB92900992901AA9">
+        <dc:Bounds x="1280" y="44" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ED71EFE5AD2D11F9" bpmnElement="SendTask_CA04B24D2275CA07">
+        <dc:Bounds x="1120" y="23" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_B1C6E60299BA9C63" bpmnElement="SequenceFlow_11AB125480514609" sourceElement="BPMNShape_25AC1D360182860E" targetElement="BPMNShape_ED71EFE5AD2D11F9">
+        <di:waypoint x="809.5865" y="166" />
+        <di:waypoint x="810" y="63" />
+        <di:waypoint x="1120" y="63" />
+        <bpmndi:BPMNLabel id="BPMNEdge_B1C6E60299BA9C63_label">
+          <dc:Bounds x="729.5865" y="130.29325" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_2FD94D82D1124A5B" bpmnElement="SequenceFlow_ED489A186FEFFC2B" sourceElement="BPMNShape_ED71EFE5AD2D11F9" targetElement="BPMNShape_B50C98637104D3AE">
+        <di:waypoint x="1220" y="63" />
+        <di:waypoint x="1280" y="62.595" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

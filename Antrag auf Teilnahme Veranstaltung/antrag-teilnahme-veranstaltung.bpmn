@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_A80D931B06B94A77">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.29.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_B54730D36190384F">
+    <bpmn:participant id="Participant_39FC3F6BC8105009" name="Antrag Teilnahme Veranstaltung" processRef="Process_797558625897293A" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_797558625897293A" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_2B68601F13519481">
+      <bpmn:lane id="Lane_FDF032C551D130CC" name="Antragssteller/in">
+        <bpmn:flowNodeRef>StartEvent_0E6DE78609391AC0</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_6D60E9FCF508198D" name="Geschäftsführer/Vertretung">
+        <bpmn:flowNodeRef>UserTask_69F9B07C8EA2F8D0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_913903266FC0295A</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_E3DD4452A68E1FE8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_E86C623B8E44C413</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_B585480F5343F8C8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_E4A76A1E3A09451E</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_2B05FEC5E2C66A78" name="Vorgesetzte/r">
+        <bpmn:flowNodeRef>UserTask_22558A3705F2E3FD</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_7F079C3F3B9EB83A</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_07C23FEF09CD0CFC</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_77F20A1C0437001A</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_0E6DE78609391AC0" name="Antrag stellen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="roleowners-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Titel","type":"ProcessHubTextInput","isRequired":true,"config":{}},{"name":"Informationen zur Veranstaltung","type":"ProcessHubTextArea","isRequired":false,"config":{}},{"name":"Anlagen","type":"ProcessHubFileUpload","isRequired":false,"config":{}},{"name":"Teilnahmeart","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["aktiv","passiv","Beratung"]}},{"name":"Lane_2B05FEC5E2C66A78","type":"ProcessHubRoleOwner","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte füllen Sie den Antrag zur Teilnahme möglichst vollständig aus.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_01CA061D8AC92B8E</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_22558A3705F2E3FD" name="Freigabe">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Antrag genehmigt (Vorgesetzte/r)","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"]}},{"name":"Begründung (Vorgesetzte/r)","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Antrag genehmigt (Vorgesetzte/r)']=='nein'","defaultValue":""}},{"name":"Hinweise Vorgesetzte/r","type":"ProcessHubTextArea","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte entscheiden Sie darüber, ob die Teilnahme an der vorliegenden Veranstaltung genehmigt wird oder nicht.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_01CA061D8AC92B8E</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_5F5B37F8A70E6EC2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="UserTask_69F9B07C8EA2F8D0" name="Freigabe Geschäftsführung">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Antrag genehmigt (Geschäftsführung)","type":"ProcessHubDropdown","isRequired":true,"config":{"options":["ja","nein"]}},{"name":"Begründung (Geschäftsführung)","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Antrag genehmigt (Geschäftsführung)']=='nein'","defaultValue":""}},{"name":"Hinweise Geschäftsführung","type":"ProcessHubTextArea","isRequired":false,"config":{}}]</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte entscheiden Sie darüber, ob die Teilnahme an der vorliegenden Veranstaltung genehmigt wird oder nicht.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_570B144EA3D74B53</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_A2A0826D6C59829F</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_01CA061D8AC92B8E" sourceRef="StartEvent_0E6DE78609391AC0" targetRef="UserTask_22558A3705F2E3FD" />
+    <bpmn:endEvent id="EndEvent_913903266FC0295A" name="Ablehnung">
+      <bpmn:incoming>SequenceFlow_708AA29EB3C859C3</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="SendTask_E3DD4452A68E1FE8" name="Zustimmung kommunizieren">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Guten Tag role['Antragssteller/in'].firstName role['Antragssteller/in'].lastName,
+
+Ihrem Antrag zur Teilnahme an der Veranstaltung 'field['Titel']' wurde stattgegeben.
+Ich wünsche Ihnen eine erfolgreiche Teilnahme.
+
+Viele Grüße
+role['Geschäftsführer/Vertretung'].firstName role['Geschäftsführer/Vertretung'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_FDF032C551D130CC","Lane_2B05FEC5E2C66A78"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Antrag wurde freigegeben</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">false</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">null</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_9CAF3D699F0B6D85</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_84AE9001C1999E2D</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="EndEvent_E86C623B8E44C413" name="Zustimmung">
+      <bpmn:incoming>SequenceFlow_84AE9001C1999E2D</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_84AE9001C1999E2D" sourceRef="SendTask_E3DD4452A68E1FE8" targetRef="EndEvent_E86C623B8E44C413" />
+    <bpmn:sendTask id="SendTask_B585480F5343F8C8" name="Ablehnung kommunizieren">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Guten Tag role['Antragssteller/in'].firstName role['Antragssteller/in'].lastName,
+
+Ihrem Antrag zur Teilnahme an der Veranstaltung 'field['Titel']' wurde nicht stattgegeben.
+Begründung: field['Begründung (Geschäftsführung)']
+
+Viele Grüße
+role['Geschäftsführer/Vertretung'].firstName role['Geschäftsführer/Vertretung'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_FDF032C551D130CC","Lane_2B05FEC5E2C66A78"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Ablehnung des Antrags zur Teilnahme an der Veranstaltung 'field['Titel']'</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">true</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">null</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_F9C47B0CDB70BC71</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_708AA29EB3C859C3</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_708AA29EB3C859C3" sourceRef="SendTask_B585480F5343F8C8" targetRef="EndEvent_913903266FC0295A" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_E4A76A1E3A09451E" name="">
+      <bpmn:incoming>SequenceFlow_A2A0826D6C59829F</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_9CAF3D699F0B6D85</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_F9C47B0CDB70BC71</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_A2A0826D6C59829F" sourceRef="UserTask_69F9B07C8EA2F8D0" targetRef="ExclusiveGateway_E4A76A1E3A09451E" />
+    <bpmn:sequenceFlow id="SequenceFlow_9CAF3D699F0B6D85" sourceRef="ExclusiveGateway_E4A76A1E3A09451E" targetRef="SendTask_E3DD4452A68E1FE8">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_E4A76A1E3A09451E.userInput.choosenTaskId == 'SendTask_E3DD4452A68E1FE8'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_F9C47B0CDB70BC71" sourceRef="ExclusiveGateway_E4A76A1E3A09451E" targetRef="SendTask_B585480F5343F8C8">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Antrag genehmigt (Geschäftsführung)'] == 'nein')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_E4A76A1E3A09451E.userInput.choosenTaskId == 'SendTask_B585480F5343F8C8'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_7F079C3F3B9EB83A" name="Ablehnung">
+      <bpmn:incoming>SequenceFlow_0269040644FF10E8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_07C23FEF09CD0CFC" name="">
+      <bpmn:incoming>SequenceFlow_5F5B37F8A70E6EC2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_570B144EA3D74B53</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_19D54BF97178ACA5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_5F5B37F8A70E6EC2" sourceRef="UserTask_22558A3705F2E3FD" targetRef="ExclusiveGateway_07C23FEF09CD0CFC" />
+    <bpmn:sequenceFlow id="SequenceFlow_570B144EA3D74B53" sourceRef="ExclusiveGateway_07C23FEF09CD0CFC" targetRef="UserTask_69F9B07C8EA2F8D0">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_07C23FEF09CD0CFC.userInput.choosenTaskId == 'UserTask_69F9B07C8EA2F8D0'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sendTask id="SendTask_77F20A1C0437001A" name="Ablehnung kommunizieren">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Guten Tag role['Antragssteller/in'].firstName role['Antragssteller/in'].lastName,
+
+Ihrem Antrag zur Teilnahme an der Veranstaltung 'field['Titel']' wurde nicht stattgegeben.
+Begründung: field['Begründung (Vorgesetzte/r)']
+
+Viele Grüße
+role['Vorgesetzte/r'].firstName role['Vorgesetzte/r'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_FDF032C551D130CC"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Ablehnung des Antrags zur Teilnahme an der Veranstaltung 'field['Titel']'</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">false</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">false</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">[]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_19D54BF97178ACA5</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0269040644FF10E8</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_19D54BF97178ACA5" sourceRef="ExclusiveGateway_07C23FEF09CD0CFC" targetRef="SendTask_77F20A1C0437001A">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Antrag genehmigt (Vorgesetzte/r)'] == 'nein')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_07C23FEF09CD0CFC.userInput.choosenTaskId == 'SendTask_77F20A1C0437001A'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0269040644FF10E8" sourceRef="SendTask_77F20A1C0437001A" targetRef="EndEvent_7F079C3F3B9EB83A" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_C76E88BF4330FB32">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_B54730D36190384F">
+      <bpmndi:BPMNShape id="BPMNShape_E24739793BB2A6FD" bpmnElement="Lane_FDF032C551D130CC">
+        <dc:Bounds x="430" y="0" width="870" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_50DFD7DC030A8062" bpmnElement="Lane_2B05FEC5E2C66A78">
+        <dc:Bounds x="430" y="125" width="870" height="135" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_6E77D7DDEAD6B305" bpmnElement="Lane_6D60E9FCF508198D">
+        <dc:Bounds x="430" y="260" width="870" height="241.2405" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_E487D4B9A9445D00" bpmnElement="Participant_39FC3F6BC8105009">
+        <dc:Bounds x="400" y="0" width="900" height="501.2405" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_F19A8819B92A6408" bpmnElement="StartEvent_0E6DE78609391AC0">
+        <dc:Bounds x="500" y="45" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_9BD2DAB3AA291851" bpmnElement="UserTask_22558A3705F2E3FD">
+        <dc:Bounds x="598" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_D1B9AC73755D1D8F" bpmnElement="UserTask_69F9B07C8EA2F8D0">
+        <dc:Bounds x="710" y="341" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_5D1F57551559623B" bpmnElement="SequenceFlow_01CA061D8AC92B8E" sourceElement="BPMNShape_F19A8819B92A6408" targetElement="BPMNShape_9BD2DAB3AA291851">
+        <di:waypoint x="536" y="63" />
+        <di:waypoint x="567" y="63" />
+        <di:waypoint x="567" y="190" />
+        <di:waypoint x="598" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_DDFED8122FDE8D70" bpmnElement="EndEvent_913903266FC0295A">
+        <dc:Bounds x="1207.173" y="417.9915" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_D9A1B3F48EAECDBA" bpmnElement="SendTask_E3DD4452A68E1FE8">
+        <dc:Bounds x="1013.173" y="279.5865" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_F13A72C8C638E74E" bpmnElement="EndEvent_E86C623B8E44C413">
+        <dc:Bounds x="1207.173" y="300.9915" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_F7436569E2D6CC7A" bpmnElement="SequenceFlow_84AE9001C1999E2D" sourceElement="BPMNShape_D9A1B3F48EAECDBA" targetElement="BPMNShape_F13A72C8C638E74E">
+        <di:waypoint x="1113.173" y="319.5865" />
+        <di:waypoint x="1207.173" y="319.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_C38DCCD7A984658C" bpmnElement="SendTask_B585480F5343F8C8">
+        <dc:Bounds x="1018" y="396" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_A2250D8F0F9BE00E" bpmnElement="SequenceFlow_708AA29EB3C859C3" sourceElement="BPMNShape_C38DCCD7A984658C" targetElement="BPMNShape_DDFED8122FDE8D70">
+        <di:waypoint x="1118" y="436" />
+        <di:waypoint x="1207.173" y="436.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_46E66C7C6461A3FD" bpmnElement="ExclusiveGateway_E4A76A1E3A09451E">
+        <dc:Bounds x="858" y="359" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_331F2D0C12E43321" bpmnElement="SequenceFlow_A2A0826D6C59829F" sourceElement="BPMNShape_D1B9AC73755D1D8F" targetElement="BPMNShape_46E66C7C6461A3FD">
+        <di:waypoint x="810" y="381" />
+        <di:waypoint x="858" y="380.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_51B0733C873032A0" bpmnElement="SequenceFlow_9CAF3D699F0B6D85" sourceElement="BPMNShape_46E66C7C6461A3FD" targetElement="BPMNShape_D9A1B3F48EAECDBA">
+        <di:waypoint x="901.173" y="380.5865" />
+        <di:waypoint x="950" y="380.5865" />
+        <di:waypoint x="950" y="319.5865" />
+        <di:waypoint x="1013.173" y="319.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_13999A42CD39232C" bpmnElement="SequenceFlow_F9C47B0CDB70BC71" sourceElement="BPMNShape_46E66C7C6461A3FD" targetElement="BPMNShape_C38DCCD7A984658C">
+        <di:waypoint x="901.173" y="380.5865" />
+        <di:waypoint x="950" y="380.5865" />
+        <di:waypoint x="950" y="436" />
+        <di:waypoint x="1018" y="436" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_20D2E57121725DFD" bpmnElement="EndEvent_7F079C3F3B9EB83A">
+        <dc:Bounds x="1207" y="171" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_B1753D86131791CC" bpmnElement="ExclusiveGateway_07C23FEF09CD0CFC">
+        <dc:Bounds x="738" y="168" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_26007CB5633E3A22" bpmnElement="SequenceFlow_5F5B37F8A70E6EC2" sourceElement="BPMNShape_9BD2DAB3AA291851" targetElement="BPMNShape_B1753D86131791CC">
+        <di:waypoint x="698" y="190" />
+        <di:waypoint x="738" y="189.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_B14065664A269957" bpmnElement="SequenceFlow_570B144EA3D74B53" sourceElement="BPMNShape_B1753D86131791CC" targetElement="BPMNShape_D1B9AC73755D1D8F">
+        <di:waypoint x="759.5865" y="211.173" />
+        <di:waypoint x="760" y="341" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_6DCDFE9E614D3504" bpmnElement="SendTask_77F20A1C0437001A">
+        <dc:Bounds x="1010" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_E2FC5A58B126CB6B" bpmnElement="SequenceFlow_19D54BF97178ACA5" sourceElement="BPMNShape_B1753D86131791CC" targetElement="BPMNShape_6DCDFE9E614D3504">
+        <di:waypoint x="781.173" y="189.5865" />
+        <di:waypoint x="1010" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_D00981BD9E4B10CE" bpmnElement="SequenceFlow_0269040644FF10E8" sourceElement="BPMNShape_6DCDFE9E614D3504" targetElement="BPMNShape_20D2E57121725DFD">
+        <di:waypoint x="1110" y="190" />
+        <di:waypoint x="1207" y="189.595" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

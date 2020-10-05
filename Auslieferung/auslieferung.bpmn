@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:processhub="http://processhub.com/schema/1.0/bpmn" id="Definition_B10D99ECA53E75D8">
+  <bpmn:extensionElements>
+    <processhub:inputOutput>
+      <processhub:inputParameter name="roxtra-version">8.29.0</processhub:inputParameter>
+    </processhub:inputOutput>
+  </bpmn:extensionElements>
+  <bpmn:collaboration id="Collaboration_7087878573040B5C">
+    <bpmn:participant id="Participant_98CC3A75540D82A8" name="Auslieferung" processRef="Process_DBAC81D89BBA87DD" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_DBAC81D89BBA87DD" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_653DAC0EC20A8D7D">
+      <bpmn:lane id="Lane_7D4197A4974686B2" name="Vertrieb">
+        <bpmn:flowNodeRef>UserTask_9118F411546BF328</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_A4C9229AE62EADA2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_E60C53FE8EE0D89C</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_07FD5FEA923E146B</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1C86EDAB9D45AE61" name="Warenlager">
+        <bpmn:flowNodeRef>EndEvent_5123F97CC9AF9C70</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_A27014838BBBD344</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_5A8BD2181649CFB1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_E48A59B9C0F52FB6</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_36ECEE676E8AF8FE" name="Bestellungseingang">
+        <bpmn:flowNodeRef>StartEvent_136199618E62EBEE</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_8DD0DBEC9BA1C613</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_5164852137C7A981</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_136199618E62EBEE" name="Bestellungseingang">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="roleowners-editable">true</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte füllen Sie das vorliegende Bestellformular aus.</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Bestellnummer","type":"ProcessHubTextInput","isRequired":true,"config":{}},{"name":"Kundennummer","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Bestellung","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":""}},{"name":"Datum der Bestellung","type":"ProcessHubDate","isRequired":false,"config":{}},{"name":"Anhang","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_513DBD339E8D8C83</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_5123F97CC9AF9C70" name="Lieferung">
+      <bpmn:incoming>SequenceFlow_43934817261D1DD4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="UserTask_9118F411546BF328" name="Bestellung kontrollieren">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte kontrollieren Sie die Bestellung auf Vollständigkeit.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Informationen zur Bestellung sind vollständig","type":"ProcessHubDropdown","isRequired":true,"config":{"defaultValue":"ja","options":["ja","nein"]}},{"name":"fehlende Informationen:","type":"ProcessHubTextArea","isRequired":true,"config":{"conditionExpression":"field['Informationen zur Bestellung sind vollständig']=='nein'","defaultValue":""}},{"name":"Kommentar","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Informationen zur Bestellung sind vollständig']=='ja'","defaultValue":""}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_513DBD339E8D8C83</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_173070ADB3E09CC1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_3C4F5B986A48B9F8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_513DBD339E8D8C83" sourceRef="StartEvent_136199618E62EBEE" targetRef="UserTask_9118F411546BF328" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_A4C9229AE62EADA2" name="">
+      <bpmn:incoming>SequenceFlow_3C4F5B986A48B9F8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_F2920C6196C21566</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_4E21B72B2BBFE933</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_3C4F5B986A48B9F8" sourceRef="UserTask_9118F411546BF328" targetRef="ExclusiveGateway_A4C9229AE62EADA2" />
+    <bpmn:userTask id="UserTask_A27014838BBBD344" name="Verfügbarkeit prüfen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte prüfen Sie ob die bestellte Ware vorrätig ist.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Die Ware ist","type":"ProcessHubDropdown","isRequired":true,"config":{"defaultValue":"verfügbar","options":["verfügbar","nicht verfügbar"]}},{"name":"Hinweis","type":"ProcessHubTextArea","isRequired":false,"config":{"conditionExpression":"field['Die Ware ist']=='nicht verfügbar'","defaultValue":""}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_F2920C6196C21566</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_9842B91A57C1EF2D</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_F2920C6196C21566" name="ja" sourceRef="ExclusiveGateway_A4C9229AE62EADA2" targetRef="UserTask_A27014838BBBD344">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Informationen zur Bestellung sind vollständig'] == 'ja')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_A4C9229AE62EADA2.userInput.choosenTaskId == 'UserTask_A27014838BBBD344'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_4E21B72B2BBFE933" name="nein" sourceRef="ExclusiveGateway_A4C9229AE62EADA2" targetRef="SendTask_8DD0DBEC9BA1C613">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Informationen zur Bestellung sind vollständig'] == 'nein')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_A4C9229AE62EADA2.userInput.choosenTaskId == 'SendTask_8DD0DBEC9BA1C613'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_5A8BD2181649CFB1" name="">
+      <bpmn:incoming>SequenceFlow_9842B91A57C1EF2D</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_8CBEA76E79F4327C</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_4330B3C5D4F27FC7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_9842B91A57C1EF2D" sourceRef="UserTask_A27014838BBBD344" targetRef="ExclusiveGateway_5A8BD2181649CFB1" />
+    <bpmn:userTask id="UserTask_E48A59B9C0F52FB6" name="Bestellung abwickeln">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="all-fields-editable">false</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="description">Bitte wickeln Sie die Bestellung ab und bereiten die Lieferung vor.</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_8CBEA76E79F4327C</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_43934817261D1DD4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_8CBEA76E79F4327C" name="verfügbar" sourceRef="ExclusiveGateway_5A8BD2181649CFB1" targetRef="UserTask_E48A59B9C0F52FB6">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Die Ware ist'] == 'verfügbar')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_5A8BD2181649CFB1.userInput.choosenTaskId == 'UserTask_E48A59B9C0F52FB6'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_43934817261D1DD4" sourceRef="UserTask_E48A59B9C0F52FB6" targetRef="EndEvent_5123F97CC9AF9C70" />
+    <bpmn:sequenceFlow id="SequenceFlow_4330B3C5D4F27FC7" name="nicht verfügbar" sourceRef="ExclusiveGateway_5A8BD2181649CFB1" targetRef="SendTask_07FD5FEA923E146B">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="sequenceflow-expression">(field['Die Ware ist'] == 'nicht verfügbar')</processhub:inputParameter>
+          <processhub:inputParameter name="isBuilder-expression">true</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression" language="JavaScript">this.variables.taskInput.ExclusiveGateway_5A8BD2181649CFB1.userInput.choosenTaskId == 'SendTask_07FD5FEA923E146B'</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_E60C53FE8EE0D89C" name="keine Lieferung">
+      <bpmn:incoming>SequenceFlow_D5998EDFC0765A65</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="SendTask_8DD0DBEC9BA1C613" name="weitere Informationen benötigt">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Hallo role['Bestellungseingang'].firstName role['Bestellungseingang'].lastName, 
+
+Bitte vervollständigen Sie die Informationen zur Bestellung.
+Folgende Angaben fehlen: field['fehlende Informationen:']
+
+Viele Grüße
+role['Vertrieb'].firstName role['Vertrieb'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_36ECEE676E8AF8FE"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Informationen zur Bestellung sind unvollständig</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">true</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">[]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_4E21B72B2BBFE933</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_192C324CD9B4813E</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:userTask id="UserTask_5164852137C7A981" name="Vervollständigung der Informationen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Bitte vervollständigen Sie die Informationen zur Bestellung.</processhub:inputParameter>
+          <processhub:inputParameter name="all-fields-editable">true</processhub:inputParameter>
+          <processhub:inputParameter name="view-all-fields">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-mail-notification">true</processhub:inputParameter>
+          <processhub:inputParameter name="save-decision-in-fields">false</processhub:inputParameter>
+          <processhub:inputParameter name="custom-field-contents-value" />
+          <processhub:inputParameter name="due-at-duration">0</processhub:inputParameter>
+          <processhub:inputParameter name="due-at-can-be-edit">false</processhub:inputParameter>
+          <processhub:inputParameter name="processhub-userform">[{"name":"Bestellung","type":"ProcessHubTextArea","isRequired":false,"config":{"defaultValue":""}},{"name":"Bestellnummer","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Kundennummer","type":"ProcessHubTextInput","isRequired":false,"config":{}},{"name":"Datum der Bestellung","type":"ProcessHubDate","isRequired":false,"config":{}},{"name":"Anhang","type":"ProcessHubFileUpload","isRequired":false,"config":{}}]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_192C324CD9B4813E</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_173070ADB3E09CC1</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_192C324CD9B4813E" sourceRef="SendTask_8DD0DBEC9BA1C613" targetRef="UserTask_5164852137C7A981" />
+    <bpmn:sequenceFlow id="SequenceFlow_173070ADB3E09CC1" sourceRef="UserTask_5164852137C7A981" targetRef="UserTask_9118F411546BF328" />
+    <bpmn:sendTask id="SendTask_07FD5FEA923E146B" name="Kunde benachrichtigen">
+      <bpmn:extensionElements>
+        <processhub:inputOutput>
+          <processhub:inputParameter name="description">Hallo role['Vertrieb'].firstName role['Vertrieb'].lastName, 
+
+bitte benachrichtigen Sie den Kunden, dass die Ware derzeit nicht vorrätig ist.
+
+Viele Grüße
+role['Warenlager'].firstName role['Warenlager'].lastName</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-receiver">["Lane_7D4197A4974686B2"]</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-subject">Ware ist nicht vorrätig</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-with-field-contents">true</processhub:inputParameter>
+          <processhub:inputParameter name="send-task-instance-link">true</processhub:inputParameter>
+          <processhub:inputParameter name="fields-which-should-send">["Hinweis"]</processhub:inputParameter>
+        </processhub:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_4330B3C5D4F27FC7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_D5998EDFC0765A65</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="SequenceFlow_D5998EDFC0765A65" sourceRef="SendTask_07FD5FEA923E146B" targetRef="EndEvent_E60C53FE8EE0D89C" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram name="BPMNDiagram_605DFBA153638C26">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_7087878573040B5C">
+      <bpmndi:BPMNShape id="BPMNShape_91D8831ACFB56DA8" bpmnElement="Lane_7D4197A4974686B2">
+        <dc:Bounds x="430" y="-190" width="1030" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_6E09B60D7FD89ACC" bpmnElement="Lane_1C86EDAB9D45AE61">
+        <dc:Bounds x="430" y="-40" width="1030" height="149.827" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_3CD3116116653BA6" bpmnElement="Participant_98CC3A75540D82A8">
+        <dc:Bounds x="400" y="-341.4135" width="1060" height="451.2405" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_E36C24B7A5F837FE" bpmnElement="StartEvent_136199618E62EBEE">
+        <dc:Bounds x="500" y="-303" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_4E31D09277F24757" bpmnElement="EndEvent_5123F97CC9AF9C70">
+        <dc:Bounds x="1382" y="17" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_D577FCE9A8BA06A5" bpmnElement="UserTask_9118F411546BF328">
+        <dc:Bounds x="662" y="-170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_4A65954C2EA3F6E9" bpmnElement="SequenceFlow_513DBD339E8D8C83" sourceElement="BPMNShape_E36C24B7A5F837FE" targetElement="BPMNShape_D577FCE9A8BA06A5">
+        <di:waypoint x="536" y="-285" />
+        <di:waypoint x="610" y="-285" />
+        <di:waypoint x="610" y="-130" />
+        <di:waypoint x="662" y="-130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_BB53E20571FF2FB3" bpmnElement="ExclusiveGateway_A4C9229AE62EADA2">
+        <dc:Bounds x="815" y="-152" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_5D7914DA57ACEA6F" bpmnElement="SequenceFlow_3C4F5B986A48B9F8" sourceElement="BPMNShape_D577FCE9A8BA06A5" targetElement="BPMNShape_BB53E20571FF2FB3">
+        <di:waypoint x="762" y="-130" />
+        <di:waypoint x="815" y="-130.4135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_D543E134742C7D7F" bpmnElement="UserTask_A27014838BBBD344">
+        <dc:Bounds x="888.5865" y="-5" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_BF5219FA506C5693" bpmnElement="SequenceFlow_F2920C6196C21566" sourceElement="BPMNShape_BB53E20571FF2FB3" targetElement="BPMNShape_D543E134742C7D7F">
+        <di:waypoint x="836.5865" y="-108.827" />
+        <di:waypoint x="836.5865" y="35" />
+        <di:waypoint x="888.5865" y="35" />
+        <bpmndi:BPMNLabel id="BPMNEdge_BF5219FA506C5693_label">
+          <dc:Bounds x="789.5865" y="-159.9135" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_C529ACD66FAFBD58" bpmnElement="SequenceFlow_4E21B72B2BBFE933" sourceElement="BPMNShape_BB53E20571FF2FB3" targetElement="BPMNShape_E8CA8AD676456AB2">
+        <di:waypoint x="858.173" y="-130.4135" />
+        <di:waypoint x="938.5865" y="-130.4135" />
+        <di:waypoint x="938.5865" y="-230" />
+        <bpmndi:BPMNLabel id="BPMNEdge_C529ACD66FAFBD58_label">
+          <dc:Bounds x="831" y="-103" width="57" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_C7A40016C918493A" bpmnElement="ExclusiveGateway_5A8BD2181649CFB1">
+        <dc:Bounds x="1032" y="13" width="43.173" height="43.173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_AF83174C56E35876" bpmnElement="SequenceFlow_9842B91A57C1EF2D" sourceElement="BPMNShape_D543E134742C7D7F" targetElement="BPMNShape_C7A40016C918493A">
+        <di:waypoint x="988.5865" y="35" />
+        <di:waypoint x="1032" y="34.5865" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_BE5524D68638F455" bpmnElement="UserTask_E48A59B9C0F52FB6">
+        <dc:Bounds x="1209" y="-5" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_11390CC0892D3548" bpmnElement="SequenceFlow_8CBEA76E79F4327C" sourceElement="BPMNShape_C7A40016C918493A" targetElement="BPMNShape_BE5524D68638F455">
+        <di:waypoint x="1075.173" y="34.5865" />
+        <di:waypoint x="1209" y="35" />
+        <bpmndi:BPMNLabel id="BPMNEdge_11390CC0892D3548_label">
+          <dc:Bounds x="1077" y="10" width="126" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_3017F88A5F49C19E" bpmnElement="SequenceFlow_43934817261D1DD4" sourceElement="BPMNShape_BE5524D68638F455" targetElement="BPMNShape_4E31D09277F24757">
+        <di:waypoint x="1309" y="35" />
+        <di:waypoint x="1382" y="35" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_19C7E60E2E6F98F6" bpmnElement="SequenceFlow_4330B3C5D4F27FC7" sourceElement="BPMNShape_C7A40016C918493A" targetElement="BPMNShape_6D2659694502968D">
+        <di:waypoint x="1053.5865" y="13" />
+        <di:waypoint x="1054" y="-90" />
+        <bpmndi:BPMNLabel id="BPMNEdge_19C7E60E2E6F98F6_label">
+          <dc:Bounds x="960" y="-30.45675" width="200" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_5E265EEBFC86654D" bpmnElement="EndEvent_E60C53FE8EE0D89C">
+        <dc:Bounds x="1381" y="-149.5" width="37.19" height="37.19" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_E8CA8AD676456AB2" bpmnElement="SendTask_8DD0DBEC9BA1C613">
+        <dc:Bounds x="888.5865" y="-310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_21D1A830B6A243D1" bpmnElement="Lane_36ECEE676E8AF8FE">
+        <dc:Bounds x="430" y="-341.4135" width="1030" height="151.4135" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_FF272BBB08BDC1FB" bpmnElement="UserTask_5164852137C7A981">
+        <dc:Bounds x="662" y="-310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_34DABA56E55434CE" bpmnElement="SequenceFlow_192C324CD9B4813E" sourceElement="BPMNShape_E8CA8AD676456AB2" targetElement="BPMNShape_FF272BBB08BDC1FB">
+        <di:waypoint x="888.5865" y="-270" />
+        <di:waypoint x="762" y="-270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_CEB0FA63C06CDDEE" bpmnElement="SequenceFlow_173070ADB3E09CC1" sourceElement="BPMNShape_FF272BBB08BDC1FB" targetElement="BPMNShape_D577FCE9A8BA06A5">
+        <di:waypoint x="712" y="-230" />
+        <di:waypoint x="712" y="-170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_6D2659694502968D" bpmnElement="SendTask_07FD5FEA923E146B">
+        <dc:Bounds x="1004" y="-170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_DC1EB929AF2E9041" bpmnElement="SequenceFlow_D5998EDFC0765A65" sourceElement="BPMNShape_6D2659694502968D" targetElement="BPMNShape_5E265EEBFC86654D">
+        <di:waypoint x="1104" y="-130" />
+        <di:waypoint x="1381" y="-130.905" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
